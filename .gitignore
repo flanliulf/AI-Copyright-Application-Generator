@@ -1,0 +1,74 @@
+# AI驱动软件著作权申请材料生成系统 - Git忽略文件
+
+# 生成的输出文件
+output_docs/
+output_sourcecode/
+process_docs/
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# 编辑器和IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node.js (如果有前端工具)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 用户特定配置
+config_local.json
+*.local
+
+# 操作系统
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# 备份文件
+*.bak
+*.backup
+*.orig
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 说明：保留模板文件但忽略实际生成的内容
+# requires_docs/ 目录中的模板文件会被保留
+# 但用户填写的具体项目文件在复制到新项目时应该被忽略
+
+# 特殊情况：如果用户在主模板中填写了实际项目信息，
+# 可以取消注释以下行来忽略这些文件
+# requires_docs/需求文档.md
+# requires_docs/技术栈说明文档.md
+# requires_docs/UI设计规范.md
