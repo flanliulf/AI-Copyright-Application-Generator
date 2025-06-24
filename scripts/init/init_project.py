@@ -139,10 +139,18 @@ def copy_fixed_documents(script_dir, project_dir):
         for file_path in system_prompt_src.glob("*.md"):
             shutil.copy2(file_path, system_prompt_dst / file_path.name)
     
-    # 复制工作流程文档
-    workflow_src = script_dir / "workflow.md"
-    if workflow_src.exists():
-        shutil.copy2(workflow_src, project_dir / "workflow.md")
+    # 复制工作流程文档和执行计划文档
+    workflow_files = [
+        "工作流程.md",
+        "执行计划.md"
+    ]
+    
+    for workflow_file in workflow_files:
+        src = script_dir / workflow_file
+        if src.exists():
+            shutil.copy2(src, project_dir / workflow_file)
+        else:
+            print_warning(f"工作流程文档不存在: {src}")
     
     print_success("固定文档复制完成")
 
@@ -495,7 +503,7 @@ def main():
     args = parser.parse_args()
     
     project_name = args.project_name
-    script_dir = Path(__file__).parent.absolute()
+    script_dir = Path(__file__).parent.parent.parent.absolute()  # 回到项目根目录
     project_dir = Path.cwd() / project_name
     
     print_info(f"开始初始化项目: {project_name}")

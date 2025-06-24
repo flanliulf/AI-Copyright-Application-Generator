@@ -4,7 +4,7 @@
 # 将 output_sourcecode/backend/ 目录下所有Java文件及配置文件内容拼接生成统一的后端源代码文档
 
 # 设置脚本目录
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"  # 回到项目根目录
 BACKEND_DIR="${SCRIPT_DIR}/output_sourcecode/backend"
 OUTPUT_DIR="${SCRIPT_DIR}/output_docs"
 OUTPUT_FILE="${OUTPUT_DIR}/后端源代码.txt"

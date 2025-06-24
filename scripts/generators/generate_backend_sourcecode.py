@@ -96,7 +96,7 @@ def generate_backend_sourcecode():
     生成后端源代码文档
     """
     # 定义路径
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # 回到项目根目录
     backend_dir = os.path.join(base_dir, 'output_sourcecode', 'backend')
     output_dir = os.path.join(base_dir, 'output_docs')
     output_file = os.path.join(output_dir, '后端源代码.txt')

@@ -2,9 +2,18 @@
 
 # 前端源代码拼接脚本 (Shell版本)
 # 将 output_sourcecode/front/ 目录下所有HTML文件内容拼接生成统一的前端源代码文档
+#
+# CSS处理策略：
+# - 彻底移除 <style> 标签及其内容
+# - 移除 CSS 外部链接 (rel="stylesheet")  
+# - 移除内联样式属性 (style="...")
+# - 保留HTML结构和JavaScript逻辑
+# - 保留class属性（可能对JavaScript功能重要）
+#
+# 这样可以显著减少文档长度，突出核心程序逻辑，更适合软著申请材料要求
 
 # 设置脚本目录
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"  # 回到项目根目录
 FRONT_DIR="${SCRIPT_DIR}/output_sourcecode/front"
 OUTPUT_DIR="${SCRIPT_DIR}/output_docs"
 OUTPUT_FILE="${OUTPUT_DIR}/前端源代码.txt"
@@ -68,10 +77,25 @@ for html_file in "${HTML_FILES[@]}"; do
     # 写入文件分隔标识和源代码
     echo "=== ${filename} ===" >> "${OUTPUT_FILE}"
     
-    # 读取HTML内容并移除CSS样式（简单处理）
+    # 读取HTML内容并彻底移除CSS样式内容，保留HTML结构和JavaScript
     if [ -f "$html_file" ]; then
-        # 使用sed移除<style>标签内容，替换为注释
-        sed 's/<style[^>]*>.*<\/style>/    <!-- CSS样式已省略 -->/g' "$html_file" >> "${OUTPUT_FILE}"
+        # 创建临时文件进行多步处理
+        temp_file=$(mktemp)
+        
+        # 1. 移除<style>标签及其内容
+        sed 's/<style[^>]*>.*<\/style>/    <!-- CSS样式已省略，完整CSS请查看原始HTML文件 -->/g' "$html_file" > "$temp_file"
+        
+        # 2. 移除CSS外部链接
+        sed -i.bak 's/<link[^>]*rel=["\x27]stylesheet["\x27][^>]*>/    <!-- CSS外部链接已省略 -->/gi' "$temp_file"
+        
+        # 3. 移除内联样式属性
+        sed -i.bak 's/ style=["\x27][^"\x27]*["\x27]//g' "$temp_file"
+        
+        # 输出处理后的内容
+        cat "$temp_file" >> "${OUTPUT_FILE}"
+        
+        # 清理临时文件
+        rm -f "$temp_file" "$temp_file.bak"
     else
         echo "错误：无法读取文件 ${html_file}" >> "${OUTPUT_FILE}"
     fi

@@ -98,21 +98,35 @@ class ProjectChecker:
         # 核心配置文件
         self.check_file_exists("ai-copyright-config.json")
         
-        # 初始化脚本
-        self.check_file_exists("init_project.py")
-        self.check_file_exists("init_project.sh")
+        # 统一入口脚本
+        self.check_file_exists("ai-copyright.py")
+        self.check_file_exists("ai-copyright.sh")
         self.check_file_exists("create-copyright-project")
         
-        # 生成脚本
+        # 初始化脚本（新目录）
+        self.check_file_exists("scripts/init/init_project.py")
+        self.check_file_exists("scripts/init/init_project.sh")
+        
+        # 生成脚本（新目录）
         generation_scripts = [
-            "generate_all_sourcecode.py",
-            "generate_frontend_sourcecode.py", 
-            "generate_backend_sourcecode.py",
-            "generate_all_sourcecode.sh",
-            "generate_frontend_sourcecode.sh",
-            "generate_backend_sourcecode.sh"
+            "scripts/generators/generate_all_sourcecode.py",
+            "scripts/generators/generate_frontend_sourcecode.py", 
+            "scripts/generators/generate_backend_sourcecode.py",
+            "scripts/generators/generate_all_sourcecode.sh",
+            "scripts/generators/generate_frontend_sourcecode.sh",
+            "scripts/generators/generate_backend_sourcecode.sh"
         ]
         for script in generation_scripts:
+            self.check_file_exists(script)
+        
+        # 验证脚本（新目录）
+        validation_scripts = [
+            "scripts/validators/check_project.py",
+            "scripts/validators/check_project.sh", 
+            "scripts/validators/run_tests.py",
+            "scripts/validators/validate_frontend_pages.py"
+        ]
+        for script in validation_scripts:
             self.check_file_exists(script)
         
         # 文档文件
@@ -123,12 +137,15 @@ class ProjectChecker:
             "03-使用说明.md",
             "04-故障排除.md",
             "05-FAQ.md",
+            "00-文档导航.md",
             "CLAUDE.md",
             "CLAUDE_zh.md",
             "ROADMAP.md",
+            "FEATURE_LIST.md",
+            "BUG_FIXES_LOG.md",
             "工作流程.md",
             "执行计划.md",
-            "项目检查指南.md"
+            "06-项目检查指南.md"
         ]
         for doc in docs:
             self.check_file_exists(doc)

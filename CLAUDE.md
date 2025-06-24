@@ -64,7 +64,7 @@ The system features three professionally designed UI styles to match different s
 3. **Minimal Style**: Clean and content-focused design, perfect for content management systems, educational platforms, and productivity tools
 
 #### UI Style Selection Methods:
-- **Interactive Setup**: Choose during project initialization with `python3 init_project.py`
+- **Interactive Setup**: Choose during project initialization with `python3 scripts/init/init_project.py`
 - **Configuration**: Set `ui_design_style` parameter in `ai-copyright-config.json`
 - **Custom Override**: Create custom UI specification in `requires_docs/UI设计规范.md`
 

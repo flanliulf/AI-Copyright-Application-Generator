@@ -59,7 +59,7 @@ Python 3.6+即可，无需安装额外的第三方库。
 cd AI-Copyright-Application-Generator
 
 # 创建测试项目
-python3 init_project.py test-verification
+python3 scripts/init/init_project.py test-verification
 
 # 检查生成结果
 ls test-verification/
@@ -82,7 +82,7 @@ rm -rf test-verification
 5. **生成文档**：生成用户手册和申请表格
 6. **整理材料**：运行脚本生成最终材料包
 
-详细步骤请参考 [快速开始.md](./快速开始.md)。
+详细步骤请参考 [01-快速开始.md](./01-快速开始.md)。
 
 ### Q8: 需求文档应该写多详细？
 
@@ -215,9 +215,9 @@ rm -rf test-verification
 **A**: 完全可以：
 ```bash
 # 为每个项目创建独立目录
-python3 init_project.py project-a
-python3 init_project.py project-b
-python3 init_project.py project-c
+python3 scripts/init/init_project.py project-a
+python3 scripts/init/init_project.py project-b
+python3 scripts/init/init_project.py project-c
 
 # 每个项目独立配置和生成
 cd project-a && # 配置和生成项目A的材料
@@ -265,10 +265,10 @@ rm -rf output_docs/* output_sourcecode/* process_docs/*
 ### Q22: 遇到问题如何获取帮助？
 
 **A**: 按以下顺序寻求帮助：
-1. **查看故障排除文档**：[故障排除.md](./故障排除.md)
-2. **查看使用说明**：[使用说明.md](./使用说明.md)
-3. **查看快速开始指南**：[快速开始.md](./快速开始.md)
-4. **检查安装指南**：[安装指南.md](./安装指南.md)
+1. **查看故障排除文档**：[04-故障排除.md](./04-故障排除.md)
+2. **查看使用说明**：[03-使用说明.md](./03-使用说明.md)
+3. **查看快速开始指南**：[01-快速开始.md](./01-快速开始.md)
+4. **检查安装指南**：[02-安装指南.md](./02-安装指南.md)
 
 提供问题报告时，请包含：
 - 操作系统和Python版本

@@ -1,0 +1,31 @@
+{
+  "_comment_info": "=== AI驱动软件著作权申请材料生成系统 - 配置文件 ===",
+  "_comment_name": "文件名：ai-copyright-config.json（避免与其他项目的config.json混淆）",
+  "_comment_init": "=== 项目初始化配置（用户必须设置） ===",
+  "front": "JavaScript",
+  "backend": "Java", 
+  "title": "请填写您的软件系统完整名称（如：智能客户关系管理系统）",
+  "short_title": "请填写系统简称（如：智能CRM系统）",
+  "system_profile": "requires_docs/需求文档.md",
+  "dev_tech_stack": "requires_docs/技术栈说明文档.md",
+  "ui_design_spec": "requires_docs/UI设计规范.md",
+  "ui_design_style": "corporate",
+
+  "_comment_usage": "=== 使用说明 ===",
+  "_usage_note_1": "1. 请务必修改上方的 title 和 short_title 为您的实际项目名称",
+  "_usage_note_2": "2. front 和 backend 可根据实际技术栈修改（如 React, Vue, Python, Node.js 等）",
+  "_usage_note_3": "3. 选择UI设计风格：ui_design_style 可设置为 corporate（企业商务）、cyberpunk（暗黑科技）、minimal（极简主义）",
+  "_usage_note_4": "4. 详细填写 requires_docs/需求文档.md 文件（必需）",
+  "_usage_note_5": "5. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（自定义UI规范会覆盖ui_design_style选择）",
+  "_usage_note_6": "6. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
+
+  "_comment_fixed": "=== 固定配置（请勿修改） ===", 
+  "system_prompt_dir": "system_prompts",
+  "ui_design_spec_default": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
+
+  "_comment_generated": "=== 流程生成配置（执行过程中自动更新） ===",
+  "kuangjia": "process_docs/框架设计文档.md",
+  "page_list": "process_docs/页面清单.md", 
+  "shujuku": "output_docs/数据库代码.txt",
+  "deploy_requirements": "output_docs/软件著作权登记信息表.md"
+}

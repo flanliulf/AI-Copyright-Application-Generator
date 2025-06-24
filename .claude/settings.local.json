@@ -20,7 +20,14 @@
       "Bash(chmod:*)",
       "Bash(./check_project.sh:*)",
       "Bash(timeout:*)",
-      "Bash(gtimeout:*)"
+      "Bash(gtimeout:*)",
+      "Bash(# 移动生成脚本\nmv generate_all_sourcecode.py scripts/generators/\nmv generate_all_sourcecode.sh scripts/generators/\nmv generate_frontend_sourcecode.py scripts/generators/\nmv generate_frontend_sourcecode.sh scripts/generators/\nmv generate_backend_sourcecode.py scripts/generators/\nmv generate_backend_sourcecode.sh scripts/generators/\n\n# 移动验证脚本\nmv check_project.py scripts/validators/\nmv check_project.sh scripts/validators/\nmv run_tests.py scripts/validators/\nmv validate_frontend_pages.py scripts/validators/\n\n# 移动初始化脚本\nmv init_project.py scripts/init/\nmv init_project.sh scripts/init/\n\n# 移动配置文件\nmv ai-copyright-config.json config/ai-copyright-config.json.template)",
+      "Bash(./ai-copyright.sh status:*)",
+      "Bash(cp:*)",
+      "Bash(for i in {1..5})",
+      "Bash(do cp output_sourcecode/front/large_page.html \"output_sourcecode/front/page_$i.html\")",
+      "Bash(done)",
+      "Bash(true)"
     ],
     "deny": []
   }

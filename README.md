@@ -13,6 +13,42 @@
 
 ## 🌟 项目特性
 
+### ⚡ 快速特性概览
+
+<table>
+<tr>
+<td width="50%">
+
+**🎯 核心功能**
+- ✅ AI驱动完整材料生成
+- ✅ 智能项目初始化
+- ✅ 多UI设计风格系统
+
+**🔧 开发工具**  
+- ✅ 统一命令行界面
+- ✅ 项目结构规范化
+
+</td>
+<td width="50%">
+
+**🔒 质量保证**
+- ✅ 全面项目检查系统
+- ✅ 自动化测试框架
+- ✅ 前端页面验证
+
+**⚡ 性能优化**
+- ✅ 智能Token限制处理
+
+📊 **当前状态**: 11个特性已实现 ✅
+
+</td>
+</tr>
+</table>
+
+> 📖 详细特性说明请查看 **[FEATURE_LIST.md](./FEATURE_LIST.md)**
+
+---
+
 ### 🎨 多样化UI设计系统
 - **三种专业设计风格**：企业商务、暗黑科技、极简主义风格
 - **智能风格选择**：根据项目特点自动推荐最适合的UI设计风格
@@ -90,11 +126,11 @@
 ```bash
 # 在任意目录下创建新项目（最推荐）
 cd /your/desired/directory
-python3 /path/to/AI-Copyright-Application-Generator/init_project.py "项目名称"
+python3 scripts/init/init_project.py "项目名称"
 
 # 在当前工程目录下创建
 cd AI-Copyright-Application-Generator
-python3 init_project.py "项目名称"
+python3 scripts/init/init_project.py "项目名称"
 
 # 使用全局命令（需配置PATH）
 ./create-copyright-project "项目名称"
@@ -131,7 +167,7 @@ cd "您的新项目名称"
 
 #### 5. 一键生成源代码文档
 ```bash
-python3 generate_all_sourcecode.py
+python3 scripts/generators/generate_all_sourcecode.py
 ```
 
 📖 **完整流程指导**：请查看 **[01-快速开始.md](./01-快速开始.md)** 获取详细的分步骤操作指南
@@ -218,8 +254,8 @@ python3 generate_all_sourcecode.py
 
 ```bash
 # Python版本检查（推荐，功能完整）
-python3 check_project.py              # 完整检查
-python3 check_project.py --quick      # 快速检查
+python3 scripts/validators/check_project.py              # 完整检查
+python3 scripts/validators/check_project.py --quick      # 快速检查
 
 # Shell版本检查（轻量级）
 ./check_project.sh                    # 完整检查
@@ -231,10 +267,10 @@ python3 check_project.py --quick      # 快速检查
 
 ```bash
 # 运行所有自动化测试
-python3 run_tests.py
+python3 scripts/validators/run_tests.py
 
 # 检查指定项目目录
-python3 run_tests.py /path/to/project
+python3 scripts/validators/run_tests.py /path/to/project
 ```
 
 ### 检查项目包括
@@ -244,10 +280,11 @@ python3 run_tests.py /path/to/project
 - ✅ 文档引用一致性检查
 - ✅ Git配置和版本控制状态
 
-📋 **详细使用说明**: [项目检查指南.md](./项目检查指南.md)
+📋 **详细使用说明**: [06-项目检查指南.md](./06-项目检查指南.md)
 
 ## 技术支持
 
+### 📚 用户文档
 如需技术支持或有疑问，请按学习路径查阅相关文档：
 - **[00-文档导航.md](./00-文档导航.md)** - 学习路径规划（推荐首先阅读）
 - **[01-快速开始.md](./01-快速开始.md)** - 5分钟上手入门
@@ -257,6 +294,12 @@ python3 run_tests.py /path/to/project
 - **[05-FAQ.md](./05-FAQ.md)** - 常见问题解答
 - **[工作流程.md](./工作流程.md)** - 六阶段工作流程详细说明
 - **[执行计划.md](./执行计划.md)** - 具体执行步骤
+
+### 🔧 开发和维护文档
+- **[FEATURE_LIST.md](./FEATURE_LIST.md)** - 🚀 系统特性列表 (含快速概览和发展路线图)
+- **[BUG_FIXES_LOG.md](./BUG_FIXES_LOG.md)** - 🐛 Bug修复记录和解决方案
+- **[ROADMAP.md](./ROADMAP.md)** - 📅 项目发展计划和里程碑
+- **[CLAUDE.md](./CLAUDE.md)** - 🤖 Claude Code AI助手工作指南
 
 ---
 

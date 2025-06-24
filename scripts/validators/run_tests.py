@@ -70,9 +70,11 @@ class TestRunner:
         """测试项目结构完整性"""
         required_files = [
             "ai-copyright-config.json",
-            "init_project.py",
-            "check_project.py",
-            "README.md"
+            "scripts/init/init_project.py",
+            "scripts/validators/check_project.py",
+            "README.md",
+            "ai-copyright.py",
+            "ai-copyright.sh"
         ]
         
         required_dirs = [
@@ -190,7 +192,7 @@ class TestRunner:
 
     def test_check_script_functionality(self):
         """测试检查脚本功能"""
-        check_script = self.project_dir / "check_project.py"
+        check_script = self.project_dir / "scripts" / "validators" / "check_project.py"
         
         if not check_script.exists():
             return False
@@ -212,7 +214,7 @@ class TestRunner:
 
     def test_init_script_import(self):
         """测试初始化脚本导入"""
-        init_script = self.project_dir / "init_project.py"
+        init_script = self.project_dir / "scripts" / "init" / "init_project.py"
         
         if not init_script.exists():
             return False
@@ -240,8 +242,11 @@ class TestRunner:
             "03-使用说明.md",
             "04-故障排除.md",
             "05-FAQ.md",
+            "00-文档导航.md",
             "ROADMAP.md",
-            "项目检查指南.md"
+            "FEATURE_LIST.md",
+            "BUG_FIXES_LOG.md",
+            "06-项目检查指南.md"
         ]
         
         for doc in docs:

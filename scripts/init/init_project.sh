@@ -37,7 +37,7 @@ print_error() {
 }
 
 # 获取脚本所在目录
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"  # 回到项目根目录
 
 # 检查是否提供了项目名称
 if [ $# -eq 0 ]; then
@@ -102,8 +102,18 @@ cp "${SPECS_SOURCE}/tech_stack_specs/技术栈说明文档_默认.md" specs_docs
 # 复制系统提示词
 cp -r "${SCRIPT_DIR}/system_prompts/"* system_prompts/
 
-# 复制工作流程文档
-cp "${SCRIPT_DIR}/workflow.md" ./
+# 复制工作流程文档和执行计划文档
+if [ -f "${SCRIPT_DIR}/工作流程.md" ]; then
+    cp "${SCRIPT_DIR}/工作流程.md" ./
+else
+    print_warning "工作流程文档不存在: ${SCRIPT_DIR}/工作流程.md"
+fi
+
+if [ -f "${SCRIPT_DIR}/执行计划.md" ]; then
+    cp "${SCRIPT_DIR}/执行计划.md" ./
+else
+    print_warning "执行计划文档不存在: ${SCRIPT_DIR}/执行计划.md"
+fi
 
 print_success "固定文档复制完成"
 
@@ -181,7 +191,8 @@ cat > README.md << EOF
 \`\`\`
 ${PROJECT_NAME}/
 ├── ai-copyright-config.json       # 项目全局配置文件
-├── workflow.md                    # 工作流程文档
+├── 工作流程.md                    # 工作流程文档
+├── 执行计划.md                    # 执行计划文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
 │   │   ├── 01-UI设计规范_默认_Corporate.md # 默认UI设计规范 (企业商务风格)
@@ -203,11 +214,11 @@ ${PROJECT_NAME}/
 
 1. **创建需求文档**: 在 \`requires_docs/\` 目录下创建您的需求文档
 2. **技术栈配置**: 如果需要自定义技术栈，请创建 \`requires_docs/技术栈说明文档.md\`
-3. **开始开发**: 按照 \`workflow.md\` 中的六阶段开发流程执行
+3. **开始开发**: 按照 \`工作流程.md\` 中的六阶段开发流程执行
 
 ## 工作流程
 
-详细的开发流程请参考 \`workflow.md\` 文档，包含以下阶段：
+详细的开发流程请参考 \`工作流程.md\` 文档，包含以下阶段：
 
 1. 项目初始化和框架设计
 2. 系统提示词体系建设
@@ -218,7 +229,7 @@ ${PROJECT_NAME}/
 
 ## 支持
 
-如有问题，请参考 \`workflow.md\` 中的详细说明。
+如有问题，请参考 \`工作流程.md\` 中的详细说明。
 EOF
 
 # 创建需求文档模板
@@ -434,7 +445,7 @@ print_info "下一步操作:"
 echo "  1. cd ${PROJECT_NAME}"
 echo "  2. 编辑 requires_docs/需求文档.md 添加您的项目需求"
 echo "  3. 如需自定义技术栈，创建 requires_docs/技术栈说明文档.md"
-echo "  4. 参考 workflow.md 开始开发流程"
+echo "  4. 参考 工作流程.md 开始开发流程"
 echo
 
 # 显示项目结构
