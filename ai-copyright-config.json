@@ -1,4 +1,6 @@
 {
+  "_comment_info": "=== AI驱动软件著作权申请材料生成系统 - 配置文件 ===",
+  "_comment_name": "文件名：ai-copyright-config.json（避免与其他项目的config.json混淆）",
   "_comment_init": "=== 项目初始化配置（用户必须设置） ===",
   "front": "JavaScript",
   "backend": "Java", 

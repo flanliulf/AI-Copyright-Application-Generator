@@ -178,7 +178,7 @@ def create_config_file(project_dir, config):
         "deploy_requirements": f"output_docs/{config['system_title']}_软件著作权登记信息表.md"
     }
     
-    config_file = project_dir / "config.json"
+    config_file = project_dir / "ai-copyright-config.json"
     with open(config_file, 'w', encoding='utf-8') as f:
         json.dump(config_data, f, ensure_ascii=False, indent=2)
     
@@ -202,7 +202,7 @@ def create_readme(project_dir, config):
 
 ```
 {config['project_name']}/
-├── config.json                    # 项目全局配置文件
+├── ai-copyright-config.json       # 项目全局配置文件
 ├── workflow.md                    # 工作流程文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
@@ -574,7 +574,7 @@ def main():
     print_success("项目初始化完成！")
     print()
     print_info(f"项目位置: {project_dir}")
-    print_info(f"配置文件: {project_dir}/config.json")
+    print_info(f"配置文件: {project_dir}/ai-copyright-config.json")
     print()
     print_info("下一步操作:")
     print(f"  1. cd {project_name}")

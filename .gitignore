@@ -37,7 +37,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # 用户特定配置
-config_local.json
+ai-copyright-config_local.json
 *.local
 
 # 操作系统

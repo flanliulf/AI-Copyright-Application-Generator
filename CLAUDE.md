@@ -65,7 +65,7 @@ The system features three professionally designed UI styles to match different s
 
 #### UI Style Selection Methods:
 - **Interactive Setup**: Choose during project initialization with `python3 init_project.py`
-- **Configuration**: Set `ui_design_style` parameter in `config.json`
+- **Configuration**: Set `ui_design_style` parameter in `ai-copyright-config.json`
 - **Custom Override**: Create custom UI specification in `requires_docs/UI设计规范.md`
 
 #### Priority System:

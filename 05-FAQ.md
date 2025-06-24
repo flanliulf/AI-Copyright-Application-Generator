@@ -76,7 +76,7 @@ rm -rf test-verification
 
 **A**: 六个主要步骤：
 1. **项目准备**：创建新项目或复制模板
-2. **配置信息**：编辑config.json和需求文档
+2. **配置信息**：编辑ai-copyright-config.json和需求文档
 3. **生成架构**：使用AI生成技术架构文档
 4. **生成代码**：按顺序生成前端、后端、数据库代码
 5. **生成文档**：生成用户手册和申请表格
@@ -104,7 +104,7 @@ rm -rf test-verification
 - **电商平台**：前端Vue.js + 后端Spring Boot
 - **移动应用**：前端React Native + 后端Node.js
 
-可以在config.json中配置，系统会据此生成相应的代码结构。
+可以在ai-copyright-config.json中配置，系统会据此生成相应的代码结构。
 
 ## AI提示词使用问题
 
@@ -254,7 +254,7 @@ cd new-project
 rm -rf output_docs/* output_sourcecode/* process_docs/*
 
 # 修改配置文件
-# 编辑 config.json 和 requires_docs/需求文档.md
+# 编辑 ai-copyright-config.json 和 requires_docs/需求文档.md
 
 # 重新生成材料
 # 按标准流程执行六个阶段

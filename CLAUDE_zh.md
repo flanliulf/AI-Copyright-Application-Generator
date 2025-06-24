@@ -65,7 +65,7 @@
 
 #### UI风格选择方法：
 - **交互式设置**：在项目初始化时使用 `python3 init_project.py` 选择
-- **配置文件**：在 `config.json` 中设置 `ui_design_style` 参数
+- **配置文件**：在 `ai-copyright-config.json` 中设置 `ui_design_style` 参数
 - **自定义覆盖**：在 `requires_docs/UI设计规范.md` 中创建自定义UI规范
 
 #### 优先级系统：

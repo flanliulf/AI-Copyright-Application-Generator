@@ -85,17 +85,34 @@
 - 确保有文件读写权限
 
 #### 2. 创建新项目
-```bash
-# 方式一：复制主模板（推荐）
-cp -r "AI-Copyright-Application-Generator" "您的新项目名称"
 
-# 方式二：使用初始化脚本
-python3 init_project.py 您的项目名称
+**方式一：使用初始化脚本（推荐）**
+```bash
+# 在任意目录下创建新项目（最推荐）
+cd /your/desired/directory
+python3 /path/to/AI-Copyright-Application-Generator/init_project.py "项目名称"
+
+# 在当前工程目录下创建
+cd AI-Copyright-Application-Generator
+python3 init_project.py "项目名称"
+
+# 使用全局命令（需配置PATH）
+./create-copyright-project "项目名称"
 ```
 
+**方式二：直接复制模板**
+```bash
+cp -r "AI-Copyright-Application-Generator" "您的新项目名称"
+cd "您的新项目名称"
+```
+
+> **优势说明**：初始化脚本支持交互式UI风格选择、自动配置项目信息，可在任意目录创建项目。
+
 #### 3. 配置和填写需求
-- 编辑 `config.json` - 配置项目基本信息和UI设计风格
+- 编辑 `ai-copyright-config.json` - 配置项目基本信息和UI设计风格
 - 编辑 `requires_docs/需求文档.md` - **关键步骤**，详细填写软件项目信息
+
+> **重要变更**：配置文件已从 `config.json` 更名为 `ai-copyright-config.json`，避免与其他开源项目冲突。
 
 #### UI设计风格选择
 系统提供三种专业的UI设计风格，用户可根据项目特点选择：
@@ -123,7 +140,7 @@ python3 generate_all_sourcecode.py
 
 ```
 项目根目录/
-├── config.json                    # 项目配置文件
+├── ai-copyright-config.json       # 项目配置文件
 ├── 工作流程.md                     # 六阶段生成流程文档
 ├── 执行计划.md                     # 具体执行计划
 ├── specs_docs/                     # 固定规范文档目录
@@ -187,10 +204,47 @@ python3 generate_all_sourcecode.py
 
 查看我们的完整发展路线图：**[ROADMAP.md](./ROADMAP.md)**
 
-- **第一阶段**：AI集成与技术深化（3-6个月）
-- **第二阶段**：产品化与服务化（6-12个月）  
-- **第三阶段**：智能化与生态建设（12-18个月）
-- **第四阶段**：国际化与商业拓展（18-24个月）
+### 6个月快速迭代计划
+- **第一阶段**：核心功能完善（1-2个月）- Word文档生成、AI集成
+- **第二阶段**：产品化与扩展（3-4个月）- Web界面、技术栈扩展  
+- **第三阶段**：智能化与生态（5-6个月）- 多AI模型、社区建设
+
+我们采用快速迭代策略，专注解决用户核心痛点，在6个月内实现真正可用的产品。
+
+## 🔍 项目检查和测试
+
+### 完整性检查
+使用内置检查脚本验证项目状态：
+
+```bash
+# Python版本检查（推荐，功能完整）
+python3 check_project.py              # 完整检查
+python3 check_project.py --quick      # 快速检查
+
+# Shell版本检查（轻量级）
+./check_project.sh                    # 完整检查
+./check_project.sh --quick            # 快速检查
+```
+
+### 自动化测试
+运行自动化测试验证核心功能：
+
+```bash
+# 运行所有自动化测试
+python3 run_tests.py
+
+# 检查指定项目目录
+python3 run_tests.py /path/to/project
+```
+
+### 检查项目包括
+- ✅ 文件和目录结构完整性
+- ✅ 配置文件格式和内容验证
+- ✅ 脚本语法和功能测试
+- ✅ 文档引用一致性检查
+- ✅ Git配置和版本控制状态
+
+📋 **详细使用说明**: [项目检查指南.md](./项目检查指南.md)
 
 ## 技术支持
 
@@ -201,8 +255,8 @@ python3 generate_all_sourcecode.py
 - **[03-使用说明.md](./03-使用说明.md)** - 系统功能完整手册
 - **[04-故障排除.md](./04-故障排除.md)** - 问题诊断解决
 - **[05-FAQ.md](./05-FAQ.md)** - 常见问题解答
-- `工作流程.md` - 六阶段工作流程详细说明
-- `执行计划.md` - 具体执行步骤
+- **[工作流程.md](./工作流程.md)** - 六阶段工作流程详细说明
+- **[执行计划.md](./执行计划.md)** - 具体执行步骤
 
 ---
 

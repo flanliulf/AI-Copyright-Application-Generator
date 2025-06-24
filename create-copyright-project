@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# AI软著申请材料生成系统 - 全局创建脚本
+# 使用方法: create-copyright-project "项目名称"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+python3 "$SCRIPT_DIR/init_project.py" "$@"

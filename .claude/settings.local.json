@@ -14,7 +14,13 @@
       "Bash(git branch:*)",
       "Bash(git push:*)",
       "Bash(git fetch:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(python3:*)",
+      "Bash(bash:*)",
+      "Bash(chmod:*)",
+      "Bash(./check_project.sh:*)",
+      "Bash(timeout:*)",
+      "Bash(gtimeout:*)"
     ],
     "deny": []
   }

@@ -134,8 +134,8 @@ else
     TECH_STACK_PATH="specs_docs/tech_stack_specs/技术栈说明文档_默认.md"
 fi
 
-# 生成 config.json
-cat > config.json << EOF
+# 生成 ai-copyright-config.json
+cat > ai-copyright-config.json << EOF
 {
   "_comment_init": "=== 项目初始化配置（用户设置） ===",
   "front": "${FRONT_TECH}",
@@ -180,7 +180,7 @@ cat > README.md << EOF
 
 \`\`\`
 ${PROJECT_NAME}/
-├── config.json                    # 项目全局配置文件
+├── ai-copyright-config.json       # 项目全局配置文件
 ├── workflow.md                    # 工作流程文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
@@ -428,7 +428,7 @@ echo
 print_success "项目初始化完成！"
 echo
 print_info "项目位置: ${PROJECT_DIR}"
-print_info "配置文件: ${PROJECT_DIR}/config.json"
+print_info "配置文件: ${PROJECT_DIR}/ai-copyright-config.json"
 echo
 print_info "下一步操作:"
 echo "  1. cd ${PROJECT_NAME}"
