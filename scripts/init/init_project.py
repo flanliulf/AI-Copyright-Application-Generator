@@ -167,22 +167,30 @@ def create_config_file(project_dir, config):
         "ui_design_spec": "requires_docs/UI设计规范.md",
         "ui_design_style": config['ui_design_style'],
         
+        "_comment_generation": "=== 生成配置（可调整） ===",
+        "page_count_fast": 5,
+        "page_count_full": 10,
+        "api_count_min": 8,
+        "api_count_max": 35,
+        "generation_mode": "fast",
+        
         "_comment_usage": "=== 使用说明 ===",
         "_usage_note_1": "1. 请务必修改上方的 title 和 short_title 为您的实际项目名称",
         "_usage_note_2": "2. front 和 backend 可根据实际技术栈修改（如 React, Vue, Python, Node.js 等）",
         "_usage_note_3": "3. UI设计风格已设置为 " + config['ui_design_style'] + "，可修改为 corporate（企业商务）、cyberpunk（暗黑科技）、minimal（极简主义）",
-        "_usage_note_4": "4. 详细填写 requires_docs/需求文档.md 文件（必需）",
-        "_usage_note_5": "5. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（自定义UI规范会覆盖ui_design_style选择）",
-        "_usage_note_6": "6. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
+        "_usage_note_4": "4. 生成配置调整：generation_mode（fast快速验证5页/full完整生产10页），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
+        "_usage_note_5": "5. 详细填写 requires_docs/需求文档.md 文件（必需）",
+        "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（自定义UI规范会覆盖ui_design_style选择）",
+        "_usage_note_7": "7. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
         
         "_comment_fixed": "=== 固定配置（请勿修改） ===",
         "system_prompt_dir": "system_prompts",
         "ui_design_spec_default": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
         
         "_comment_generated": "=== 流程生成配置（自动生成） ===",
-        "kuangjia": f"process_docs/{config['system_title']}_框架设计文档.md",
+        "framework_design": f"process_docs/{config['system_title']}_框架设计文档.md",
         "page_list": "process_docs/页面清单.md",
-        "shujuku": "output_docs/数据库代码.md",
+        "database_schema": "output_sourcecode/db/database_schema.sql",
         "deploy_requirements": f"output_docs/{config['system_title']}_软件著作权登记信息表.md"
     }
     

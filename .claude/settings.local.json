@@ -27,7 +27,12 @@
       "Bash(for i in {1..5})",
       "Bash(do cp output_sourcecode/front/large_page.html \"output_sourcecode/front/page_$i.html\")",
       "Bash(done)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(./scripts/generators/merge_frontend_simple.sh:*)",
+      "Bash(./scripts/generators/merge_backend_simple.sh:*)",
+      "Bash(echo:*)",
+      "Bash(for:*)",
+      "Bash(do echo \"检查: $script\")"
     ],
     "deny": []
   }

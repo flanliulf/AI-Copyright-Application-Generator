@@ -1,31 +1,31 @@
 #!/bin/bash
 
-# 数据库代码简单拼接脚本
-# 功能：将数据库相关文件拼接成一个文本文件，用于软著申请
+# 数据库代码拼接脚本
+# 功能：将 output_sourcecode/db/ 目录下的SQL文件拼接成软著申请材料
 # 
-# 支持文件类型：
-# - SQL文件 (.sql)
-# - 数据库迁移文件 (migrations/)
-# - 数据库配置文件 (.json, .yml, .yaml)
-# - Python数据库模型文件 (models.py, database.py)
+# 主要处理文件类型：
+# - SQL表结构文件 (.sql)
+# - 数据定义文件 (.ddl)
+# - 数据库架构文件 (*schema*, *database*)
+# 
+# 目标：生成包含完整表注释和字段注释的纯SQL代码文档
 
 echo "🔄 开始拼接数据库相关代码..."
 
 # 设置路径
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-BACKEND_DIR="${SCRIPT_DIR}/output_sourcecode/backend"
-PROCESS_DIR="${SCRIPT_DIR}/process_docs"
+DB_DIR="${SCRIPT_DIR}/output_sourcecode/db"
 OUTPUT_DIR="${SCRIPT_DIR}/output_docs"
 OUTPUT_FILE="${OUTPUT_DIR}/数据库代码.txt"
 
 # 确保输出目录存在
 mkdir -p "${OUTPUT_DIR}"
 
-# 数据库相关文件的查找路径
-SEARCH_DIRS=("${BACKEND_DIR}" "${PROCESS_DIR}")
+# 主要查找数据库SQL文件目录
+SEARCH_DIRS=("${DB_DIR}")
 
-# 数据库相关文件模式
-DB_PATTERNS=("*.sql" "*models.py" "*database.py" "*db.py" "migrations/*" "*schema*" "*数据库*")
+# 数据库相关文件模式（主要关注SQL文件）
+DB_PATTERNS=("*.sql" "*.ddl" "*schema*" "*database*")
 
 # 查找所有数据库相关文件
 DB_FILES=()
@@ -46,13 +46,14 @@ done
 DB_FILES=($(printf '%s\n' "${DB_FILES[@]}" | sort -u))
 
 if [ ${#DB_FILES[@]} -eq 0 ]; then
-    echo "❌ 未找到数据库相关文件"
-    echo "💡 查找路径: ${SEARCH_DIRS[*]}"
+    echo "❌ 未找到数据库SQL文件"
+    echo "💡 查找路径: ${DB_DIR}"
     echo "💡 查找模式: ${DB_PATTERNS[*]}"
     echo ""
     echo "💡 提示：如果还没有生成数据库代码，请先："
-    echo "   1. 运行数据库代码生成流程"
-    echo "   2. 或手动创建数据库相关文件"
+    echo "   1. 使用AI生成数据库SQL代码到 output_sourcecode/db/ 目录"
+    echo "   2. 确保生成的SQL文件包含完整的表注释和字段注释"
+    echo "   3. 推荐文件名：database_schema.sql, init_data.sql, indexes.sql"
     exit 1
 fi
 
@@ -65,26 +66,8 @@ for file in "${DB_FILES[@]}"; do
 done
 echo ""
 
-# 清空输出文件并写入头部信息
-cat > "${OUTPUT_FILE}" << EOF
-====================================================================
-数据库代码合集
-====================================================================
-生成时间: $(date '+%Y-%m-%d %H:%M:%S')
-文件数量: ${#DB_FILES[@]}
-用途: 软件著作权申请 - 数据库设计和实现代码
-
-包含内容:
-- 数据库表结构设计
-- 数据模型定义
-- 数据库操作代码
-- 配置和迁移文件
-
-文件列表:
-$(printf "  - %s\n" "${DB_FILES[@]#$SCRIPT_DIR/}")
-====================================================================
-
-EOF
+# 清空输出文件（不添加头部信息，保持纯代码格式）
+> "${OUTPUT_FILE}"
 
 # 拼接所有数据库文件
 counter=1
@@ -161,12 +144,6 @@ if [ -f "${OUTPUT_FILE}" ]; then
     fi
     echo "📊 文件大小: ${size_str}"
     echo "📋 总行数: $line_count"
-    echo ""
-    echo "💡 使用说明："
-    echo "   - 此文件包含完整的数据库设计和实现代码"
-    echo "   - 可直接用于软著申请的技术文档部分"
-    echo "   - 体现数据库架构设计和技术实现能力"
-    echo "   - 无需AI处理，节省token消耗"
 else
     echo "❌ 生成失败"
     exit 1

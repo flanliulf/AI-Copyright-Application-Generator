@@ -160,10 +160,17 @@ cat > ai-copyright-config.json << EOF
   "ui_design_spec_default": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
   "ui_design_spec": "requires_docs/UI设计规范.md",
   
+  "_comment_generation": "=== 生成配置（可调整） ===",
+  "page_count_fast": 5,
+  "page_count_full": 10,
+  "api_count_min": 8,
+  "api_count_max": 35,
+  "generation_mode": "fast",
+  
   "_comment_generated": "=== 流程生成配置（自动生成） ===",
-  "kuangjia": "process_docs/${SYSTEM_TITLE}_框架设计文档.md",
+  "framework_design": "process_docs/${SYSTEM_TITLE}_框架设计文档.md",
   "page_list": "process_docs/页面清单.md",
-  "shujuku": "output_docs/数据库代码.md",
+  "database_schema": "output_sourcecode/db/database_schema.sql",
   "deploy_requirements": "output_docs/${SYSTEM_TITLE}_软件著作权登记信息表.md"
 }
 EOF

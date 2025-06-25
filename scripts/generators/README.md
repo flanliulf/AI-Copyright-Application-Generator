@@ -43,14 +43,15 @@
 
 ---
 
-### 📁 **源代码拼接脚本** (新增脚本)
+### 📁 **源代码拼接脚本** (专用于软著申请)
 
-#### 简单拼接脚本系列
-- **前端拼接**: `merge_frontend_simple.sh`
-- **后端拼接**: `merge_backend_simple.sh`
-- **数据库拼接**: `merge_database_simple.sh`
-- **全量拼接**: `merge_sourcecode_all.sh`
-- **批量拼接**: `merge_all_simple.sh`
+#### 模块化拼接脚本
+- **前端拼接**: `merge_frontend_simple.sh` - 拼接 `output_sourcecode/front/` 下的HTML文件
+- **后端拼接**: `merge_backend_simple.sh` - 拼接 `output_sourcecode/backend/` 下的源代码
+- **数据库拼接**: `merge_database_simple.sh` - 拼接 `output_sourcecode/db/` 下的SQL文件
+
+#### 统一入口脚本
+- **智能拼接器**: `merge_all_simple.sh` - 提供分类拼接和全量拼接两种模式的交互式选择
 
 **核心特性**：
 - 📄 **完整保留** - 保持源代码100%原貌，无任何删减
@@ -68,6 +69,11 @@
 
 ## 🔍 **关键差异对比**
 
+### ⚡ **核心区别**
+- **生成脚本**: 用于AI交互和代码分析，可有描述性输出
+- **拼接脚本**: 专用于软著申请，必须严格纯代码输出
+- **系统提示词**: 已明确指向拼接脚本进行软著材料生成
+
 ### 内容处理差异
 
 | 特性 | 源代码生成脚本 | 源代码拼接脚本 |
@@ -76,6 +82,7 @@
 | **内容完整性** | 🎯 优化处理，突出逻辑 | 📋 100%保留原始内容 |
 | **文件分隔格式** | `=== filename ===` | `/* ================= filename ================= */` |
 | **压缩处理** | 📊 支持多级压缩选项 | ❌ 无任何压缩处理 |
+| **输出纯净度** | 🔍 包含统计和分析信息 | 📋 **严格纯代码输出** |
 
 ### 输出格式差异
 
@@ -96,6 +103,15 @@
 | **技术交流** | ✅ 便于理解和讨论 | ❌ 包含过多样式信息 | 生成脚本 |
 | **归档备份** | ❌ 信息有损失 | ✅ 完整保存 | 拼接脚本 |
 
+### 📂 **当前目录结构**
+
+```
+output_sourcecode/
+├── front/              # 前端HTML页面文件
+├── backend/            # 后端源代码文件  
+└── db/                 # 数据库SQL文件 ⭐ 新增
+```
+
 ## 🚀 **使用指南**
 
 ### 快速选择指南
@@ -112,9 +128,12 @@
 # 使用源代码拼接脚本（完整原始版本）
 ./merge_all_simple.sh  # 一键生成所有材料
 # 或单独执行
-./merge_frontend_simple.sh
-./merge_backend_simple.sh
+./merge_frontend_simple.sh     # 拼接 output_sourcecode/front/ 下的HTML文件
+./merge_backend_simple.sh      # 拼接 output_sourcecode/backend/ 下的源代码
+./merge_database_simple.sh     # 拼接 output_sourcecode/db/ 下的SQL文件
 ```
+
+**⚠️ 重要提醒**：系统提示词中已明确指向拼接脚本用于软著申请材料生成
 
 **🔍 我要代码审查**
 ```bash
@@ -128,11 +147,14 @@
 #### 软著申请材料准备流程
 ```bash
 # 1. 确保已生成源代码文件
-ls output_sourcecode/front/
-ls output_sourcecode/backend/
+ls output_sourcecode/front/    # 前端HTML文件
+ls output_sourcecode/backend/  # 后端源代码文件
+ls output_sourcecode/db/       # 数据库SQL文件
 
-# 2. 一键生成所有拼接材料
+# 2. 一键生成所有拼接材料（智能选择）
 ./merge_all_simple.sh
+# → 选择1：分类拼接（3个独立文件）
+# → 选择2：全量拼接（1个完整文件）
 
 # 3. 检查生成的文件
 ls -la ../../output_docs/
@@ -210,11 +232,16 @@ ls -la ../../output_docs/
 
 ### 数据库拼接脚本支持的文件类型
 
-| 文件类型 | 注释格式 | 说明 |
-|----------|----------|------|
-| `.sql` | `--` | SQL脚本和数据库结构 |
-| `*models.py`, `*database.py` | `#` | 数据模型定义 |
-| `migrations/*` | 根据文件类型 | 数据库迁移文件 |
+| 文件类型 | 注释格式 | 说明 | 位置 |
+|----------|----------|------|------|
+| `.sql` | `--` | SQL表结构、数据定义 | `output_sourcecode/db/` |
+| `.ddl` | `--` | 数据定义语言文件 | `output_sourcecode/db/` |
+| `*schema*`, `*database*` | `--` | 数据库架构文件 | `output_sourcecode/db/` |
+
+**推荐文件命名**：
+- `database_schema.sql` - 主表结构定义
+- `init_data.sql` - 初始化数据
+- `indexes.sql` - 索引定义
 
 ## 📝 **总结**
 

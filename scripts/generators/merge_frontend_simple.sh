@@ -45,13 +45,7 @@ echo "📁 找到 ${#HTML_FILES[@]} 个HTML文件"
 # 清空输出文件
 > "${OUTPUT_FILE}"
 
-# 拼接所有文件
-echo "=====================================================================" >> "${OUTPUT_FILE}"
-echo "前端页面源代码合集" >> "${OUTPUT_FILE}"
-echo "生成时间: $(date '+%Y-%m-%d %H:%M:%S')" >> "${OUTPUT_FILE}"
-echo "文件数量: ${#HTML_FILES[@]}" >> "${OUTPUT_FILE}"
-echo "=====================================================================" >> "${OUTPUT_FILE}"
-echo "" >> "${OUTPUT_FILE}"
+# 拼接所有文件（不添加头部信息，保持纯代码格式）
 
 for html_file in "${HTML_FILES[@]}"; do
     filename=$(basename "$html_file")
