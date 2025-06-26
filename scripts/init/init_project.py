@@ -60,29 +60,43 @@ def get_yes_no_input(prompt, default_no=True):
 def get_ui_design_style():
     """获取用户选择的UI设计风格"""
     print_info("请选择UI设计风格:")
-    print("1. corporate - 企业商务风格（默认）")
-    print("   适用于：企业管理系统、办公软件、政务系统、金融应用等")
-    print("   特点：专业稳重、通用性强、符合主流商务审美")
-    print()
-    print("2. cyberpunk - 暗黑科技风格")
-    print("   适用于：开发者工具、数据分析平台、科技产品、游戏相关应用等")
-    print("   特点：科技感强、适合夜间使用、吸引年轻用户群体")
-    print()
-    print("3. minimal - 极简主义风格")
-    print("   适用于：内容管理系统、阅读类应用、教育平台、专业工具等")
-    print("   特点：简洁优雅、专注内容、永恒的设计价值")
-    print()
     
+    styles = [
+        ("corporate", "企业商务风格（默认）", "企业管理系统、办公软件、政务系统、金融应用等", "专业稳重、通用性强、符合主流商务审美"),
+        ("cyberpunk", "暗黑科技风格", "开发者工具、数据分析平台、科技产品、游戏相关应用等", "科技感强、适合夜间使用、吸引年轻用户群体"),
+        ("minimal", "极简主义风格", "内容管理系统、阅读类应用、教育平台、专业工具等", "简洁优雅、专注内容、永恒的设计价值"),
+        ("bauhaus", "包豪斯风格", "设计工具平台、建筑设计系统、艺术展览平台、学术研究工具", "功能至上、几何纯粹、理性秩序"),
+        ("japanese", "日式极简风格", "冥想禅修应用、文化艺术平台、阅读写作工具、生活方式应用", "侘寂美学、间之道、静谧禅意"),
+        ("scandinavian", "斯堪的纳维亚风格", "生活方式应用、健康养生平台、教育学习工具、家庭管理系统", "功能简约、温暖质感、自然和谐"),
+        ("futuristic", "未来科技风格", "数据分析平台、开发者工具、网络安全系统、金融交易平台", "数字未来、HUD界面、信息密集"),
+        ("elegant", "优雅复古风格", "文化教育平台、学术研究工具、图书馆系统、博物馆应用", "古典雅致、印刷美学、温暖怀旧"),
+        ("bold", "大胆现代风格", "创意设计平台、时尚品牌网站、科技创新产品、营销活动平台", "大胆突破、现代前卫、视觉冲击"),
+        ("artdeco", "艺术装饰风格", "奢侈品电商、高端酒店餐饮、艺术文化机构、金融投资平台", "装饰艺术、几何奢华、对称美学"),
+        ("memphis", "孟菲斯风格", "创意设计平台、娱乐媒体应用、时尚潮流品牌、青年社交应用", "后现代反叛、色彩狂欢、几何拼贴"),
+        ("popart", "波普艺术风格", "娱乐媒体平台、时尚购物平台、创意营销工具、社交娱乐应用", "大众文化、明亮色彩、商业美学")
+    ]
+    
+    # 显示所有风格选项
+    for i, (key, name, use_cases, features) in enumerate(styles, 1):
+        print(f"{i:2d}. {key} - {name}")
+        print(f"    适用于：{use_cases}")
+        print(f"    特点：{features}")
+        print()
+    
+    # 获取用户选择
     while True:
-        choice = input("请输入选择 (1/2/3，默认为1): ").strip()
+        choice = input(f"请输入选择 (1-{len(styles)}，默认为1): ").strip()
         if choice == "" or choice == "1":
             return "corporate"
-        elif choice == "2":
-            return "cyberpunk"
-        elif choice == "3":
-            return "minimal"
-        else:
-            print_warning("无效选择，请输入 1、2 或 3")
+        
+        try:
+            choice_num = int(choice)
+            if 1 <= choice_num <= len(styles):
+                return styles[choice_num - 1][0]
+            else:
+                print_warning(f"无效选择，请输入 1 到 {len(styles)} 之间的数字")
+        except ValueError:
+            print_warning(f"无效输入，请输入 1 到 {len(styles)} 之间的数字")
 
 def create_directory_structure(project_dir):
     """创建项目目录结构"""
@@ -115,7 +129,16 @@ def copy_fixed_documents(script_dir, project_dir):
     ui_design_files = [
         "01-UI设计规范_默认_Corporate.md",
         "02-UI设计规范_暗黑科技风格_Cyberpunk.md",
-        "03-UI设计规范_极简主义风格_Minimal.md"
+        "03-UI设计规范_极简主义风格_Minimal.md",
+        "04-UI设计规范_包豪斯风格_Bauhaus.md",
+        "05-UI设计规范_日式极简风格_Japanese.md",
+        "06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md",
+        "07-UI设计规范_未来科技风格_Futuristic.md",
+        "08-UI设计规范_优雅复古风格_Elegant.md",
+        "09-UI设计规范_大胆现代风格_Bold.md",
+        "10-UI设计规范_艺术装饰风格_ArtDeco.md",
+        "11-UI设计规范_孟菲斯风格_Memphis.md",
+        "12-UI设计规范_波普艺术风格_PopArt.md"
     ]
     
     for file_name in ui_design_files:
@@ -177,7 +200,7 @@ def create_config_file(project_dir, config):
         "_comment_usage": "=== 使用说明 ===",
         "_usage_note_1": "1. 请务必修改上方的 title 和 short_title 为您的实际项目名称",
         "_usage_note_2": "2. front 和 backend 可根据实际技术栈修改（如 React, Vue, Python, Node.js 等）",
-        "_usage_note_3": "3. UI设计风格已设置为 " + config['ui_design_style'] + "，可修改为 corporate（企业商务）、cyberpunk（暗黑科技）、minimal（极简主义）",
+        "_usage_note_3": "3. UI设计风格已设置为 " + config['ui_design_style'] + "，可修改为 corporate（企业商务）、cyberpunk（暗黑科技）、minimal（极简主义）、bauhaus（包豪斯）、japanese（日式极简）、scandinavian（斯堪的纳维亚）、futuristic（未来科技）、elegant（优雅复古）、bold（大胆现代）、artdeco（艺术装饰）、memphis（孟菲斯）、popart（波普艺术）",
         "_usage_note_4": "4. 生成配置调整：generation_mode（fast快速验证5页/full完整生产10页），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
         "_usage_note_5": "5. 详细填写 requires_docs/需求文档.md 文件（必需）",
         "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（自定义UI规范会覆盖ui_design_style选择）",
@@ -222,9 +245,18 @@ def create_readme(project_dir, config):
 ├── workflow.md                    # 工作流程文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
-│   │   ├── 01-UI设计规范_默认_Corporate.md # 默认UI设计规范 (企业商务风格)
-│   │   ├── 02-UI设计规范_暗黑科技风格_Cyberpunk.md # 暗黑科技风格 (赛博朋克)
-│   │   └── 03-UI设计规范_极简主义风格_Minimal.md # 极简主义风格
+│   │   ├── 01-UI设计规范_默认_Corporate.md # 企业商务风格 (默认)
+│   │   ├── 02-UI设计规范_暗黑科技风格_Cyberpunk.md # 暗黑科技风格
+│   │   ├── 03-UI设计规范_极简主义风格_Minimal.md # 极简主义风格
+│   │   ├── 04-UI设计规范_包豪斯风格_Bauhaus.md # 包豪斯风格
+│   │   ├── 05-UI设计规范_日式极简风格_Japanese.md # 日式极简风格
+│   │   ├── 06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md # 斯堪的纳维亚风格
+│   │   ├── 07-UI设计规范_未来科技风格_Futuristic.md # 未来科技风格
+│   │   ├── 08-UI设计规范_优雅复古风格_Elegant.md # 优雅复古风格
+│   │   ├── 09-UI设计规范_大胆现代风格_Bold.md # 大胆现代风格
+│   │   ├── 10-UI设计规范_艺术装饰风格_ArtDeco.md # 艺术装饰风格
+│   │   ├── 11-UI设计规范_孟菲斯风格_Memphis.md # 孟菲斯风格
+│   │   └── 12-UI设计规范_波普艺术风格_PopArt.md # 波普艺术风格
 │   └── tech_stack_specs/          # 技术栈规范子目录
 │       └── 技术栈说明文档_默认.md  # 默认技术栈说明模板
 ├── system_prompts/                 # 系统提示词目录（固定不变）

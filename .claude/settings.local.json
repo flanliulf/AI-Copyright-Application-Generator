@@ -32,7 +32,8 @@
       "Bash(./scripts/generators/merge_backend_simple.sh:*)",
       "Bash(echo:*)",
       "Bash(for:*)",
-      "Bash(do echo \"检查: $script\")"
+      "Bash(do echo \"检查: $script\")",
+      "Bash(rg:*)"
     ],
     "deny": []
   }

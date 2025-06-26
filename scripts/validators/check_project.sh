@@ -205,7 +205,7 @@ check_config_file() {
         # 检查UI设计风格值
         local ui_style=$(jq -r '.ui_design_style' ai-copyright-config.json 2>/dev/null)
         case "$ui_style" in
-            "corporate"|"cyberpunk"|"minimal")
+            "corporate"|"cyberpunk"|"minimal"|"bauhaus"|"japanese"|"scandinavian"|"futuristic"|"elegant"|"bold"|"artdeco"|"memphis"|"popart")
                 print_success "UI设计风格有效: $ui_style"
                 ;;
             *)

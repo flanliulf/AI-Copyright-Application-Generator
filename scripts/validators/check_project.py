@@ -229,7 +229,7 @@ class ProjectChecker:
             
             # 检查UI设计风格值
             if "ui_design_style" in config:
-                valid_styles = ["corporate", "cyberpunk", "minimal"]
+                valid_styles = ["corporate", "cyberpunk", "minimal", "bauhaus", "japanese", "scandinavian", "futuristic", "elegant", "bold", "artdeco", "memphis", "popart"]
                 if config["ui_design_style"] in valid_styles:
                     self.print_success(f"UI设计风格有效: {config['ui_design_style']}")
                 else:
