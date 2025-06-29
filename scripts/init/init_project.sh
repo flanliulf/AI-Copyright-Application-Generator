@@ -80,6 +80,9 @@ mkdir -p process_docs
 mkdir -p output_docs
 mkdir -p output_sourcecode/front
 mkdir -p output_sourcecode/backend
+mkdir -p output_sourcecode/db
+mkdir -p scripts/generators
+mkdir -p scripts/validators
 
 print_success "目录结构创建完成"
 
@@ -93,14 +96,31 @@ fi
 
 print_info "复制固定文档和系统提示词..."
 
-# 复制固定文档
-cp "${SPECS_SOURCE}/ui_design_specs/01-UI设计规范_默认_Corporate.md" specs_docs/ui_design_specs/
-cp "${SPECS_SOURCE}/ui_design_specs/02-UI设计规范_暗黑科技风格_Cyberpunk.md" specs_docs/ui_design_specs/
-cp "${SPECS_SOURCE}/ui_design_specs/03-UI设计规范_极简主义风格_Minimal.md" specs_docs/ui_design_specs/
+# 复制选择的UI设计规范文档
+print_info "复制UI设计规范: ${UI_FILE}"
+cp "${SPECS_SOURCE}/ui_design_specs/${UI_FILE}" specs_docs/ui_design_specs/
+
+# 如果不是企业风格，也复制默认企业风格作为参考
+if [ "$UI_DESIGN_STYLE" != "corporate" ]; then
+    cp "${SPECS_SOURCE}/ui_design_specs/01-UI设计规范_默认_Corporate.md" specs_docs/ui_design_specs/
+fi
+
+# 复制技术栈规范文档
 cp "${SPECS_SOURCE}/tech_stack_specs/技术栈说明文档_默认.md" specs_docs/tech_stack_specs/
 
 # 复制系统提示词
 cp -r "${SCRIPT_DIR}/system_prompts/"* system_prompts/
+
+# 复制scripts目录（生成和验证脚本）
+if [ -d "${SCRIPT_DIR}/scripts/generators" ]; then
+    print_info "复制生成脚本..."
+    cp "${SCRIPT_DIR}/scripts/generators/"* scripts/generators/
+fi
+
+if [ -d "${SCRIPT_DIR}/scripts/validators" ]; then
+    print_info "复制验证脚本..."
+    cp "${SCRIPT_DIR}/scripts/validators/"* scripts/validators/
+fi
 
 # 复制工作流程文档和执行计划文档
 if [ -f "${SCRIPT_DIR}/工作流程.md" ]; then
@@ -144,6 +164,66 @@ else
     TECH_STACK_PATH="specs_docs/tech_stack_specs/技术栈说明文档_默认.md"
 fi
 
+# 选择UI设计风格
+echo
+print_info "请选择UI设计风格:"
+echo " 1. corporate - 企业商务风格（默认）"
+echo " 2. cyberpunk - 暗黑科技风格"
+echo " 3. minimal - 极简主义风格"
+echo " 4. bauhaus - 包豪斯风格"
+echo " 5. japanese - 日式极简风格"
+echo " 6. scandinavian - 斯堪的纳维亚风格"
+echo " 7. futuristic - 未来科技风格"
+echo " 8. elegant - 优雅复古风格"
+echo " 9. bold - 大胆现代风格"
+echo "10. artdeco - 艺术装饰风格"
+echo "11. memphis - 孟菲斯风格"
+echo "12. popart - 波普艺术风格"
+echo
+
+while true; do
+    read -p "请输入选择 (1-12，默认为1): " UI_CHOICE
+    UI_CHOICE=${UI_CHOICE:-"1"}
+    
+    case $UI_CHOICE in
+        1) UI_DESIGN_STYLE="corporate"; UI_FILE="01-UI设计规范_默认_Corporate.md"; break;;
+        2) UI_DESIGN_STYLE="cyberpunk"; UI_FILE="02-UI设计规范_暗黑科技风格_Cyberpunk.md"; break;;
+        3) UI_DESIGN_STYLE="minimal"; UI_FILE="03-UI设计规范_极简主义风格_Minimal.md"; break;;
+        4) UI_DESIGN_STYLE="bauhaus"; UI_FILE="04-UI设计规范_包豪斯风格_Bauhaus.md"; break;;
+        5) UI_DESIGN_STYLE="japanese"; UI_FILE="05-UI设计规范_日式极简风格_Japanese.md"; break;;
+        6) UI_DESIGN_STYLE="scandinavian"; UI_FILE="06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md"; break;;
+        7) UI_DESIGN_STYLE="futuristic"; UI_FILE="07-UI设计规范_未来科技风格_Futuristic.md"; break;;
+        8) UI_DESIGN_STYLE="elegant"; UI_FILE="08-UI设计规范_优雅复古风格_Elegant.md"; break;;
+        9) UI_DESIGN_STYLE="bold"; UI_FILE="09-UI设计规范_大胆现代风格_Bold.md"; break;;
+        10) UI_DESIGN_STYLE="artdeco"; UI_FILE="10-UI设计规范_艺术装饰风格_ArtDeco.md"; break;;
+        11) UI_DESIGN_STYLE="memphis"; UI_FILE="11-UI设计规范_孟菲斯风格_Memphis.md"; break;;
+        12) UI_DESIGN_STYLE="popart"; UI_FILE="12-UI设计规范_波普艺术风格_PopArt.md"; break;;
+        *) print_warning "无效选择，请输入 1 到 12 之间的数字";;
+    esac
+done
+
+print_success "已选择UI设计风格: ${UI_DESIGN_STYLE}"
+
+# 选择生成模式配置
+echo
+print_info "请选择生成模式:"
+echo "1. fast - 快速验证模式（5页面，8-15个API，适合快速原型和测试）"
+echo "2. full - 完整生产模式（10页面，15-35个API，适合正式申请和完整系统）"
+echo
+
+while true; do
+    read -p "请输入选择 (1-2，默认为1): " GEN_CHOICE
+    GEN_CHOICE=${GEN_CHOICE:-"1"}
+    
+    case $GEN_CHOICE in
+        1) GENERATION_MODE="fast"; PAGE_COUNT=5; API_MIN=8; API_MAX=15; break;;
+        2) GENERATION_MODE="full"; PAGE_COUNT=10; API_MIN=15; API_MAX=35; break;;
+        *) print_warning "无效选择，请输入 1 或 2";;
+    esac
+done
+
+print_success "已选择生成模式: ${GENERATION_MODE} (${PAGE_COUNT}页面，${API_MIN}-${API_MAX}个API)"
+
 # 生成 ai-copyright-config.json
 cat > ai-copyright-config.json << EOF
 {
@@ -154,18 +234,28 @@ cat > ai-copyright-config.json << EOF
   "short_title": "${SYSTEM_SHORT_TITLE}",
   "system_profile": "requires_docs/需求文档.md",
   "dev_tech_stack": "${TECH_STACK_PATH}",
-  
-  "_comment_fixed": "=== 固定配置（不变） ===",
-  "system_prompt_dir": "system_prompts",
-  "ui_design_spec_default": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
-  "ui_design_spec": "requires_docs/UI设计规范.md",
+  "ui_design_spec": "specs_docs/ui_design_specs/${UI_FILE}",
+  "ui_design_style": "${UI_DESIGN_STYLE}",
   
   "_comment_generation": "=== 生成配置（可调整） ===",
   "page_count_fast": 5,
   "page_count_full": 10,
-  "api_count_min": 8,
-  "api_count_max": 35,
-  "generation_mode": "fast",
+  "api_count_min": ${API_MIN},
+  "api_count_max": ${API_MAX},
+  "generation_mode": "${GENERATION_MODE}",
+  
+  "_comment_usage": "=== 使用说明 ===",
+  "_usage_note_1": "1. 请务必修改上方的 title 和 short_title 为您的实际项目名称",
+  "_usage_note_2": "2. front 和 backend 可根据实际技术栈修改（如 React, Vue, Python, Node.js 等）",
+  "_usage_note_3": "3. UI设计风格已设置为 ${UI_DESIGN_STYLE}，可修改为 corporate、cyberpunk、minimal、bauhaus、japanese、scandinavian、futuristic、elegant、bold、artdeco、memphis、popart",
+  "_usage_note_4": "4. 生成配置已设置为 ${GENERATION_MODE} 模式，可调整：generation_mode（fast快速验证/full完整生产），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
+  "_usage_note_5": "5. 详细填写 requires_docs/需求文档.md 文件（必需）",
+  "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（如提供自定义UI规范，需手动修改ui_design_spec路径）",
+  "_usage_note_7": "7. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
+  
+  "_comment_fixed": "=== 固定配置（请勿修改） ===",
+  "system_prompt_dir": "system_prompts",
+  "ui_design_spec_default": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
   
   "_comment_generated": "=== 流程生成配置（自动生成） ===",
   "framework_design": "process_docs/${SYSTEM_TITLE}_框架设计文档.md",
@@ -202,19 +292,21 @@ ${PROJECT_NAME}/
 ├── 执行计划.md                    # 执行计划文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
-│   │   ├── 01-UI设计规范_默认_Corporate.md # 默认UI设计规范 (企业商务风格)
-│   │   ├── 02-UI设计规范_暗黑科技风格_Cyberpunk.md # 暗黑科技风格 (赛博朋克)
-│   │   └── 03-UI设计规范_极简主义风格_Minimal.md # 极简主义风格
+│   │   └── [选择的UI设计风格文档]   # 根据用户选择的UI风格复制相应文档
 │   └── tech_stack_specs/          # 技术栈规范子目录
 │       └── 技术栈说明文档_默认.md  # 默认技术栈说明模板
 ├── system_prompts/                 # 系统提示词目录（固定不变）
+├── scripts/                       # 生成和验证脚本目录
+│   ├── generators/               # 代码生成和合并脚本
+│   └── validators/               # 项目验证脚本
 ├── requires_docs/                 # 输入文档目录
 │   └── 需求文档.md                # 核心业务需求规格说明（待创建）
 ├── process_docs/                  # 流程中间文档目录
 ├── output_docs/                   # 最终交付文档目录
 └── output_sourcecode/             # 生成代码目录
     ├── front/                     # 前端页面代码
-    └── backend/                   # 后端项目代码
+    ├── backend/                   # 后端项目代码
+    └── db/                        # 数据库相关文件
 \`\`\`
 
 ## 下一步操作
@@ -455,7 +547,76 @@ echo "  3. 如需自定义技术栈，创建 requires_docs/技术栈说明文档
 echo "  4. 参考 工作流程.md 开始开发流程"
 echo
 
+# 执行完整性验证
+echo
+print_info "开始项目完整性验证..."
+
+# 验证关键目录
+VALIDATION_ERRORS=0
+REQUIRED_DIRS=(
+    "specs_docs/ui_design_specs"
+    "specs_docs/tech_stack_specs"
+    "system_prompts"
+    "requires_docs"
+    "process_docs"
+    "output_docs"
+    "output_sourcecode/front"
+    "output_sourcecode/backend"
+    "output_sourcecode/db"
+    "scripts/generators"
+    "scripts/validators"
+)
+
+for dir in "${REQUIRED_DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+        print_success "目录存在: $dir"
+    else
+        print_error "目录缺失: $dir"
+        ((VALIDATION_ERRORS++))
+    fi
+done
+
+# 验证配置文件
+if [ -f "ai-copyright-config.json" ]; then
+    print_success "配置文件存在"
+    # 简单JSON格式验证
+    if python3 -m json.tool ai-copyright-config.json >/dev/null 2>&1; then
+        print_success "配置文件JSON格式正确"
+    else
+        print_error "配置文件JSON格式错误"
+        ((VALIDATION_ERRORS++))
+    fi
+else
+    print_error "配置文件不存在"
+    ((VALIDATION_ERRORS++))
+fi
+
+# 验证脚本权限
+if [ -d "scripts/generators" ]; then
+    SCRIPT_COUNT=$(find scripts/generators -name "*.sh" | wc -l)
+    if [ $SCRIPT_COUNT -gt 0 ]; then
+        print_success "发现 $SCRIPT_COUNT 个生成脚本"
+        # 自动修复脚本权限
+        chmod +x scripts/generators/*.sh scripts/validators/*.sh 2>/dev/null
+        print_success "已设置脚本执行权限"
+    else
+        print_error "未发现生成脚本"
+        ((VALIDATION_ERRORS++))
+    fi
+fi
+
+# 验证报告
+echo
+print_info "=== 项目完整性验证报告 ==="
+if [ $VALIDATION_ERRORS -eq 0 ]; then
+    print_success "项目初始化验证通过！"
+    print_info "建议下一步: 详细填写 requires_docs/需求文档.md"
+else
+    print_error "发现 $VALIDATION_ERRORS 个问题，请检查修复"
+fi
+
 # 显示项目结构
+echo
 print_info "项目目录结构:"
 if command -v tree >/dev/null 2>&1; then
     tree "$PROJECT_DIR" -I '__pycache__|*.pyc|.git'

@@ -176,7 +176,7 @@ The system features twelve professionally designed UI styles to match diverse so
 12. **Elegant Vintage Style**: Classic printing aesthetics with warm tones, suitable for cultural education, academic research, and museum applications
 
 #### UI Style Selection Methods:
-- **Interactive Setup**: Choose during project initialization with `python3 scripts/init/init_project.py`
+- **Interactive Setup**: Choose during project initialization with `python3 /absolute/path/to/AI-Copyright-Application-Generator/scripts/init/init_project.py`
 - **Configuration**: Set `ui_design_style` parameter in `ai-copyright-config.json`
 - **Custom Override**: Create custom UI specification in `requires_docs/UI设计规范.md`
 

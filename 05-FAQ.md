@@ -229,6 +229,7 @@ rm -rf test-verification
 **A**: 完全可以：
 ```bash
 # 为每个项目创建独立目录
+cd AI-Copyright-Application-Generator
 python3 scripts/init/init_project.py project-a
 python3 scripts/init/init_project.py project-b
 python3 scripts/init/init_project.py project-c

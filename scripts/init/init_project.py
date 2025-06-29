@@ -57,6 +57,32 @@ def get_yes_no_input(prompt, default_no=True):
     else:
         return response not in ['n', 'no', '否']
 
+def get_generation_mode_config():
+    """获取用户选择的生成模式配置"""
+    print_info("请选择生成模式:")
+    print("1. fast - 快速验证模式（5页面，8-15个API，适合快速原型和测试）")
+    print("2. full - 完整生产模式（10页面，15-35个API，适合正式申请和完整系统）")
+    print()
+    
+    while True:
+        choice = input("请输入选择 (1-2，默认为1): ").strip()
+        if choice == "" or choice == "1":
+            return {
+                "generation_mode": "fast",
+                "page_count": 5,
+                "api_count_min": 8,
+                "api_count_max": 15
+            }
+        elif choice == "2":
+            return {
+                "generation_mode": "full", 
+                "page_count": 10,
+                "api_count_min": 15,
+                "api_count_max": 35
+            }
+        else:
+            print_warning("无效选择，请输入 1 或 2")
+
 def get_ui_design_style():
     """获取用户选择的UI设计风格"""
     print_info("请选择UI设计风格:")
@@ -108,7 +134,10 @@ def create_directory_structure(project_dir):
         "process_docs",
         "output_docs",
         "output_sourcecode/front",
-        "output_sourcecode/backend"
+        "output_sourcecode/backend",
+        "output_sourcecode/db",
+        "scripts/generators",
+        "scripts/validators"
     ]
     
     for directory in directories:
@@ -116,7 +145,7 @@ def create_directory_structure(project_dir):
     
     print_success("目录结构创建完成")
 
-def copy_fixed_documents(script_dir, project_dir):
+def copy_fixed_documents(script_dir, project_dir, ui_design_style):
     """复制固定文档和系统提示词"""
     specs_source = script_dir / "specs_docs"
     
@@ -125,27 +154,33 @@ def copy_fixed_documents(script_dir, project_dir):
         print_info("请确保脚本在包含 specs_docs 目录的项目根目录中运行")
         sys.exit(1)
     
-    # 复制UI设计规范文档
-    ui_design_files = [
-        "01-UI设计规范_默认_Corporate.md",
-        "02-UI设计规范_暗黑科技风格_Cyberpunk.md",
-        "03-UI设计规范_极简主义风格_Minimal.md",
-        "04-UI设计规范_包豪斯风格_Bauhaus.md",
-        "05-UI设计规范_日式极简风格_Japanese.md",
-        "06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md",
-        "07-UI设计规范_未来科技风格_Futuristic.md",
-        "08-UI设计规范_优雅复古风格_Elegant.md",
-        "09-UI设计规范_大胆现代风格_Bold.md",
-        "10-UI设计规范_艺术装饰风格_ArtDeco.md",
-        "11-UI设计规范_孟菲斯风格_Memphis.md",
-        "12-UI设计规范_波普艺术风格_PopArt.md"
-    ]
+    # UI风格映射表
+    ui_style_mapping = {
+        "corporate": "01-UI设计规范_默认_Corporate.md",
+        "cyberpunk": "02-UI设计规范_暗黑科技风格_Cyberpunk.md",
+        "minimal": "03-UI设计规范_极简主义风格_Minimal.md",
+        "bauhaus": "04-UI设计规范_包豪斯风格_Bauhaus.md",
+        "japanese": "05-UI设计规范_日式极简风格_Japanese.md",
+        "scandinavian": "06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md",
+        "futuristic": "07-UI设计规范_未来科技风格_Futuristic.md",
+        "elegant": "08-UI设计规范_优雅复古风格_Elegant.md",
+        "bold": "09-UI设计规范_大胆现代风格_Bold.md",
+        "artdeco": "10-UI设计规范_艺术装饰风格_ArtDeco.md",
+        "memphis": "11-UI设计规范_孟菲斯风格_Memphis.md",
+        "popart": "12-UI设计规范_波普艺术风格_PopArt.md"
+    }
     
-    for file_name in ui_design_files:
+    # 只复制选择的UI设计规范文档和默认的企业风格（作为备用参考）
+    ui_design_files_to_copy = [ui_style_mapping[ui_design_style]]
+    if ui_design_style != "corporate":
+        ui_design_files_to_copy.append(ui_style_mapping["corporate"])  # 添加默认风格作为参考
+    
+    for file_name in ui_design_files_to_copy:
         src = specs_source / "ui_design_specs" / file_name
         dst = project_dir / "specs_docs" / "ui_design_specs" / file_name
         if src.exists():
             shutil.copy2(src, dst)
+            print_info(f"复制UI设计规范: {file_name}")
     
     # 复制技术栈规范文档
     tech_stack_file = "技术栈说明文档_默认.md"
@@ -161,6 +196,29 @@ def copy_fixed_documents(script_dir, project_dir):
     if system_prompt_src.exists():
         for file_path in system_prompt_src.glob("*.md"):
             shutil.copy2(file_path, system_prompt_dst / file_path.name)
+    
+    # 复制scripts目录（生成和验证脚本）
+    scripts_src = script_dir / "scripts"
+    scripts_dst = project_dir / "scripts"
+    
+    if scripts_src.exists():
+        # 复制generators目录下的所有脚本
+        generators_src = scripts_src / "generators"
+        generators_dst = scripts_dst / "generators"
+        if generators_src.exists():
+            for file_path in generators_src.iterdir():
+                if file_path.is_file():
+                    shutil.copy2(file_path, generators_dst / file_path.name)
+                    print_info(f"复制生成脚本: {file_path.name}")
+        
+        # 复制validators目录下的所有脚本
+        validators_src = scripts_src / "validators"
+        validators_dst = scripts_dst / "validators"
+        if validators_src.exists():
+            for file_path in validators_src.iterdir():
+                if file_path.is_file():
+                    shutil.copy2(file_path, validators_dst / file_path.name)
+                    print_info(f"复制验证脚本: {file_path.name}")
     
     # 复制工作流程文档和执行计划文档
     workflow_files = [
@@ -179,6 +237,22 @@ def copy_fixed_documents(script_dir, project_dir):
 
 def create_config_file(project_dir, config):
     """创建配置文件"""
+    # UI风格映射到文件路径
+    ui_style_file_mapping = {
+        "corporate": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
+        "cyberpunk": "specs_docs/ui_design_specs/02-UI设计规范_暗黑科技风格_Cyberpunk.md",
+        "minimal": "specs_docs/ui_design_specs/03-UI设计规范_极简主义风格_Minimal.md",
+        "bauhaus": "specs_docs/ui_design_specs/04-UI设计规范_包豪斯风格_Bauhaus.md",
+        "japanese": "specs_docs/ui_design_specs/05-UI设计规范_日式极简风格_Japanese.md",
+        "scandinavian": "specs_docs/ui_design_specs/06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md",
+        "futuristic": "specs_docs/ui_design_specs/07-UI设计规范_未来科技风格_Futuristic.md",
+        "elegant": "specs_docs/ui_design_specs/08-UI设计规范_优雅复古风格_Elegant.md",
+        "bold": "specs_docs/ui_design_specs/09-UI设计规范_大胆现代风格_Bold.md",
+        "artdeco": "specs_docs/ui_design_specs/10-UI设计规范_艺术装饰风格_ArtDeco.md",
+        "memphis": "specs_docs/ui_design_specs/11-UI设计规范_孟菲斯风格_Memphis.md",
+        "popart": "specs_docs/ui_design_specs/12-UI设计规范_波普艺术风格_PopArt.md"
+    }
+    
     config_data = {
         "_comment_init": "=== 项目初始化配置（用户设置） ===",
         "front": config['front_tech'],
@@ -187,23 +261,23 @@ def create_config_file(project_dir, config):
         "short_title": config['system_short_title'],
         "system_profile": "requires_docs/需求文档.md",
         "dev_tech_stack": config['tech_stack_path'],
-        "ui_design_spec": "requires_docs/UI设计规范.md",
+        "ui_design_spec": ui_style_file_mapping[config['ui_design_style']],
         "ui_design_style": config['ui_design_style'],
         
         "_comment_generation": "=== 生成配置（可调整） ===",
         "page_count_fast": 5,
         "page_count_full": 10,
-        "api_count_min": 8,
-        "api_count_max": 35,
-        "generation_mode": "fast",
+        "api_count_min": config['api_count_min'],
+        "api_count_max": config['api_count_max'],
+        "generation_mode": config['generation_mode'],
         
         "_comment_usage": "=== 使用说明 ===",
         "_usage_note_1": "1. 请务必修改上方的 title 和 short_title 为您的实际项目名称",
         "_usage_note_2": "2. front 和 backend 可根据实际技术栈修改（如 React, Vue, Python, Node.js 等）",
         "_usage_note_3": "3. UI设计风格已设置为 " + config['ui_design_style'] + "，可修改为 corporate（企业商务）、cyberpunk（暗黑科技）、minimal（极简主义）、bauhaus（包豪斯）、japanese（日式极简）、scandinavian（斯堪的纳维亚）、futuristic（未来科技）、elegant（优雅复古）、bold（大胆现代）、artdeco（艺术装饰）、memphis（孟菲斯）、popart（波普艺术）",
-        "_usage_note_4": "4. 生成配置调整：generation_mode（fast快速验证5页/full完整生产10页），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
+        "_usage_note_4": "4. 生成配置已设置为 " + config['generation_mode'] + " 模式，可调整：generation_mode（fast快速验证/full完整生产），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
         "_usage_note_5": "5. 详细填写 requires_docs/需求文档.md 文件（必需）",
-        "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（自定义UI规范会覆盖ui_design_style选择）",
+        "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（如提供自定义UI规范，需手动修改ui_design_spec路径）",
         "_usage_note_7": "7. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
         
         "_comment_fixed": "=== 固定配置（请勿修改） ===",
@@ -245,28 +319,21 @@ def create_readme(project_dir, config):
 ├── workflow.md                    # 工作流程文档
 ├── specs_docs/                     # 固定规范文档目录
 │   ├── ui_design_specs/           # UI设计规范子目录
-│   │   ├── 01-UI设计规范_默认_Corporate.md # 企业商务风格 (默认)
-│   │   ├── 02-UI设计规范_暗黑科技风格_Cyberpunk.md # 暗黑科技风格
-│   │   ├── 03-UI设计规范_极简主义风格_Minimal.md # 极简主义风格
-│   │   ├── 04-UI设计规范_包豪斯风格_Bauhaus.md # 包豪斯风格
-│   │   ├── 05-UI设计规范_日式极简风格_Japanese.md # 日式极简风格
-│   │   ├── 06-UI设计规范_斯堪的纳维亚风格_Scandinavian.md # 斯堪的纳维亚风格
-│   │   ├── 07-UI设计规范_未来科技风格_Futuristic.md # 未来科技风格
-│   │   ├── 08-UI设计规范_优雅复古风格_Elegant.md # 优雅复古风格
-│   │   ├── 09-UI设计规范_大胆现代风格_Bold.md # 大胆现代风格
-│   │   ├── 10-UI设计规范_艺术装饰风格_ArtDeco.md # 艺术装饰风格
-│   │   ├── 11-UI设计规范_孟菲斯风格_Memphis.md # 孟菲斯风格
-│   │   └── 12-UI设计规范_波普艺术风格_PopArt.md # 波普艺术风格
+│   │   └── [选择的UI设计风格文档]   # 根据用户选择的UI风格复制相应文档
 │   └── tech_stack_specs/          # 技术栈规范子目录
 │       └── 技术栈说明文档_默认.md  # 默认技术栈说明模板
 ├── system_prompts/                 # 系统提示词目录（固定不变）
+├── scripts/                       # 生成和验证脚本目录
+│   ├── generators/               # 代码生成和合并脚本
+│   └── validators/               # 项目验证脚本
 ├── requires_docs/                 # 输入文档目录
 │   └── 需求文档.md                # 核心业务需求规格说明（待创建）
 ├── process_docs/                  # 流程中间文档目录
 ├── output_docs/                   # 最终交付文档目录
 └── output_sourcecode/             # 生成代码目录
     ├── front/                     # 前端页面代码
-    └── backend/                   # 后端项目代码
+    ├── backend/                   # 后端项目代码
+    └── db/                        # 数据库相关文件
 ```
 
 ## 下一步操作
@@ -516,6 +583,130 @@ venv/
     with open(gitignore_file, 'w', encoding='utf-8') as f:
         f.write(gitignore_content)
 
+def validate_project_integrity(project_dir, config):
+    """初始化后完整性验证"""
+    print_info("开始项目完整性验证...")
+    validation_results = []
+    
+    # 1. 验证目录结构
+    required_dirs = [
+        "specs_docs/ui_design_specs",
+        "specs_docs/tech_stack_specs", 
+        "system_prompts",
+        "requires_docs",
+        "process_docs",
+        "output_docs",
+        "output_sourcecode/front",
+        "output_sourcecode/backend", 
+        "output_sourcecode/db",
+        "scripts/generators",
+        "scripts/validators"
+    ]
+    
+    for directory in required_dirs:
+        dir_path = project_dir / directory
+        if dir_path.exists():
+            validation_results.append(f"✓ 目录存在: {directory}")
+        else:
+            validation_results.append(f"✗ 目录缺失: {directory}")
+            print_error(f"关键目录缺失: {directory}")
+    
+    # 2. 验证配置文件
+    config_file = project_dir / "ai-copyright-config.json"
+    if config_file.exists():
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config_data = json.load(f)
+            
+            # 检查关键配置项
+            required_keys = ['title', 'ui_design_style', 'generation_mode', 'ui_design_spec']
+            for key in required_keys:
+                if key in config_data:
+                    validation_results.append(f"✓ 配置项存在: {key}")
+                else:
+                    validation_results.append(f"✗ 配置项缺失: {key}")
+                    
+            # 验证UI设计规范文件存在
+            ui_spec_path = project_dir / config_data.get('ui_design_spec', '')
+            if ui_spec_path.exists():
+                validation_results.append(f"✓ UI设计规范文件存在")
+            else:
+                validation_results.append(f"✗ UI设计规范文件缺失: {config_data.get('ui_design_spec', '')}")
+                
+        except json.JSONDecodeError:
+            validation_results.append("✗ 配置文件JSON格式错误")
+            print_error("配置文件JSON格式错误")
+        except Exception as e:
+            validation_results.append(f"✗ 配置文件验证失败: {str(e)}")
+    else:
+        validation_results.append("✗ 配置文件不存在")
+        print_error("配置文件不存在")
+    
+    # 3. 验证系统提示词
+    prompt_dir = project_dir / "system_prompts"
+    expected_prompts = [
+        "01-软著框架系统提示词.md",
+        "02-页面清单及设计系统提示词.md", 
+        "03-网页代码生成系统提示词.md",
+        "04-数据库代码生成系统提示词.md",
+        "05-后端代码生成系统提示词.md",
+        "06-用户手册系统提示词.md",
+        "07-软件著作权登记信息表系统提示词.md"
+    ]
+    
+    for prompt_file in expected_prompts:
+        prompt_path = prompt_dir / prompt_file
+        if prompt_path.exists():
+            validation_results.append(f"✓ 系统提示词存在: {prompt_file}")
+        else:
+            validation_results.append(f"✗ 系统提示词缺失: {prompt_file}")
+    
+    # 4. 验证脚本权限和可执行性
+    script_dir = project_dir / "scripts" / "generators"
+    if script_dir.exists():
+        bash_scripts = list(script_dir.glob("*.sh"))
+        if bash_scripts:
+            validation_results.append(f"✓ 发现 {len(bash_scripts)} 个Bash脚本")
+            # 检查脚本权限
+            for script in bash_scripts[:3]:  # 检查前几个即可
+                if os.access(script, os.X_OK):
+                    validation_results.append(f"✓ 脚本可执行: {script.name}")
+                else:
+                    validation_results.append(f"⚠ 脚本需要执行权限: {script.name}")
+                    # 自动修复权限
+                    try:
+                        script.chmod(0o755)
+                        validation_results.append(f"✓ 已修复执行权限: {script.name}")
+                    except:
+                        validation_results.append(f"✗ 权限修复失败: {script.name}")
+        else:
+            validation_results.append("✗ 未发现生成脚本")
+    
+    # 5. 生成验证报告
+    error_count = len([r for r in validation_results if r.startswith('✗')])
+    warning_count = len([r for r in validation_results if r.startswith('⚠')])
+    success_count = len([r for r in validation_results if r.startswith('✓')])
+    
+    print()
+    print_info("=== 项目完整性验证报告 ===")
+    for result in validation_results:
+        if result.startswith('✓'):
+            print_success(result[2:])
+        elif result.startswith('⚠'):
+            print_warning(result[2:])
+        elif result.startswith('✗'):
+            print_error(result[2:])
+    
+    print()
+    print_info(f"验证统计: 成功 {success_count} | 警告 {warning_count} | 错误 {error_count}")
+    
+    if error_count == 0:
+        print_success("项目初始化验证通过！")
+        return True
+    else:
+        print_error(f"发现 {error_count} 个严重问题，请检查修复后重新验证")
+        return False
+
 def print_directory_tree(project_dir):
     """打印目录结构"""
     print_info("项目目录结构:")
@@ -564,11 +755,6 @@ def main():
     print_info("创建目录结构...")
     create_directory_structure(project_dir)
     
-    print_info("复制固定文档和系统提示词...")
-    copy_fixed_documents(script_dir, project_dir)
-    
-    print_info("创建配置文件...")
-    
     # 获取用户输入
     print()
     print_info("请输入项目配置信息:")
@@ -597,6 +783,16 @@ def main():
     ui_design_style = get_ui_design_style()
     print_success(f"已选择UI设计风格: {ui_design_style}")
     
+    # 选择生成模式配置
+    print()
+    generation_config = get_generation_mode_config()
+    print_success(f"已选择生成模式: {generation_config['generation_mode']} ({generation_config['page_count']}页面，{generation_config['api_count_min']}-{generation_config['api_count_max']}个API)")
+    
+    print_info("复制固定文档和系统提示词...")
+    copy_fixed_documents(script_dir, project_dir, ui_design_style)
+    
+    print_info("创建配置文件...")
+    
     # 配置对象
     config = {
         'project_name': project_name,
@@ -605,7 +801,11 @@ def main():
         'front_tech': front_tech,
         'backend_tech': backend_tech,
         'tech_stack_path': tech_stack_path,
-        'ui_design_style': ui_design_style
+        'ui_design_style': ui_design_style,
+        'generation_mode': generation_config['generation_mode'],
+        'page_count': generation_config['page_count'],
+        'api_count_min': generation_config['api_count_min'],
+        'api_count_max': generation_config['api_count_max']
     }
     
     create_config_file(project_dir, config)
@@ -631,8 +831,20 @@ def main():
     print("  4. 参考 workflow.md 开始开发流程")
     print()
     
+    # 执行完整性验证
+    print()
+    validation_success = validate_project_integrity(project_dir, config)
+    
     # 显示项目结构
+    print()
     print_directory_tree(project_dir)
+    
+    print()
+    if validation_success:
+        print_success("项目初始化完成并通过验证！")
+        print_info("建议下一步: 详细填写 requires_docs/需求文档.md")
+    else:
+        print_error("项目初始化完成但验证发现问题，请修复后继续")
     
     print_success("初始化脚本执行完成！")
 

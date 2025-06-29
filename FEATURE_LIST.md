@@ -1,6 +1,6 @@
 # 🚀 AI驱动软件著作权申请材料生成系统 - 特性列表
 
-## 🌟 核心特性一览 (截至2025-06-24)
+## 🌟 核心特性一览 (截至2025-06-29)
 
 <table>
 <tr>
@@ -9,10 +9,14 @@
 ### 🎯 **核心功能**
 ✅ **AI驱动完整软著材料生成** - 一键生成全套申请材料  
 ✅ **项目智能初始化系统** - 自动创建标准化项目结构  
-✅ **多UI设计风格系统** - 3种专业设计风格选择  
+✅ **多UI设计风格系统** - 12种专业设计风格选择  
+✅ **跨平台代码合并脚本** - Python版本支持Windows/Linux/macOS  
 
-### ⚡ **性能优化**
-✅ **智能Token限制处理** - 自动分批处理大型项目  
+### 🛡️ **质量监控系统**
+✅ **项目健康诊断工具** - 全面诊断和自动修复  
+✅ **需求文档质量检查** - 0-100分评分系统  
+✅ **质量监控面板** - 申请成功率智能预测  
+✅ **用户友好指导系统** - 交互式菜单和智能建议  
 
 ### 🔧 **开发工具**
 ✅ **统一命令行界面** - 集成所有系统功能的CLI  
@@ -25,14 +29,18 @@
 ✅ **全面的项目检查系统** - 多维度完整性验证  
 ✅ **自动化测试系统** - 核心功能自动化测试  
 ✅ **前端页面验证系统** - 专业代码质量检查  
+✅ **多技术栈支持** - 11种编程语言支持  
 
 ### 🎨 **用户体验**
 ✅ **CSS智能处理系统** - 优化软著材料可读性  
+✅ **彩色终端输出** - 友好的视觉反馈  
+✅ **智能错误恢复** - 自动诊断和修复机制  
 
 ### 📊 **系统状态**
-- **已实现特性**: 11个 ✅
+- **已实现特性**: 18个 ✅
+- **新增特性**: 7个 🆕
 - **开发中**: 0个 🔧
-- **规划中**: 4个 💡
+- **规划中**: 2个 💡
 - **系统健康度**: 100% 🎉
 
 </td>
@@ -41,11 +49,77 @@
 
 ---
 
+## 🆕 2025-06-29 重大更新：质量监控系统
+
+### 🛡️ 专业质量监控体系
+
+#### 项目健康诊断工具
+```bash
+python3 scripts/validators/project_doctor.py
+```
+- **全面诊断**: 检查目录结构、配置文件、脚本文件、系统提示词、需求文档
+- **自动修复**: 创建缺失目录、生成默认配置、恢复缺失脚本、设置权限  
+- **智能建议**: 根据项目状态提供下一步操作建议
+- **详细报告**: 生成`项目诊断报告.txt`，包含问题分析和改进建议
+
+#### 需求文档质量检查工具
+```bash
+python3 scripts/validators/validate_requirements.py
+```
+- **多维度检查**: 文档长度、功能模块、用户角色、技术要求、专业术语
+- **质量评分**: 0-100分评分系统，确保文档达到专业标准
+- **改进建议**: 针对性的文档优化建议
+- **质量报告**: `requires_docs/需求文档质量报告.txt`
+
+#### 质量监控面板
+```bash
+python3 scripts/validators/quality_monitor.py
+```
+- **进度跟踪**: 11个阶段生成进度实时监控
+- **代码质量分析**: 前端、后端、数据库代码质量检测
+- **成功率预测**: 基于进度40% + 质量60%的智能预测算法
+- **监控报告**: `质量监控报告.txt`
+
+#### 用户友好指导系统
+```bash  
+python3 scripts/user_guide.py
+```
+- **交互式菜单**: 7个主要功能模块的统一入口
+- **智能建议**: 根据项目状态提供个性化操作建议
+- **一键调用**: 集成所有验证和监控工具
+- **新手友好**: 详细的操作指导和实时反馈
+
+### 🔧 跨平台代码合并脚本系统
+
+#### 新版Python合并脚本（推荐）
+```bash
+# 前端代码合并
+python3 scripts/generators/merge_frontend_simple.py
+
+# 后端代码合并（支持11种语言）
+python3 scripts/generators/merge_backend_simple.py
+
+# 数据库代码合并
+python3 scripts/generators/merge_database_simple.py
+
+# 一键合并所有代码
+python3 scripts/generators/merge_all_simple.py
+```
+
+**优势对比**:
+- ✅ 跨平台兼容（Windows/Linux/macOS）
+- ✅ 完整源代码保留，无分批或压缩
+- ✅ 多技术栈支持：Java、Python、Node.js、PHP、C#、C++、Go、Ruby、Rust、Kotlin、Swift
+- ✅ 零token消耗，纯本地处理
+
 ## 📱 快速体验
 
 ```bash
 # 🚀 一键开始
 python3 ai-copyright.py init "我的软著项目"
+
+# 🏥 项目健康诊断
+python3 scripts/validators/project_doctor.py
 
 # 📊 查看系统状态  
 python3 ai-copyright.py status
@@ -291,10 +365,10 @@ python3 ai-copyright.py validate-frontend
 #### 检查模式
 ```bash
 # 快速检查
-python3 scripts/validators/check_project.py --quick
+python3 /path/to/AI-Copyright-Application-Generator/scripts/validators/check_project.py --quick
 
 # 完整检查
-python3 scripts/validators/check_project.py
+python3 /path/to/AI-Copyright-Application-Generator/scripts/validators/check_project.py
 ```
 
 ---
@@ -317,7 +391,7 @@ python3 scripts/validators/check_project.py
 
 #### 运行方式
 ```bash
-python3 scripts/validators/run_tests.py
+python3 /path/to/AI-Copyright-Application-Generator/scripts/validators/run_tests.py
 ```
 
 ---

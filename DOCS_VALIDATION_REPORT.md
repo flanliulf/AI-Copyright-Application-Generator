@@ -103,7 +103,7 @@
 - 一致的数据统计和状态追踪
 
 ### 🔮 维护建议
-1. **定期验证**: 使用`python3 scripts/validators/check_project.py`定期检查
+1. **定期验证**: 使用`python3 /absolute/path/to/AI-Copyright-Application-Generator/scripts/validators/check_project.py`定期检查
 2. **新增文档**: 添加新文档时及时更新检查脚本列表
 3. **引用维护**: 重命名文件时同步更新所有引用
 4. **统计同步**: 新增特性/修复时同步更新各文档统计

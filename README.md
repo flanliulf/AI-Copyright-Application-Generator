@@ -180,7 +180,7 @@
 ```bash
 # 在任意目录下创建新项目（最推荐）
 cd /your/desired/directory
-python3 scripts/init/init_project.py "项目名称"
+python3 /path/to/AI-Copyright-Application-Generator/scripts/init/init_project.py "项目名称"
 
 # 在当前工程目录下创建
 cd AI-Copyright-Application-Generator
@@ -238,6 +238,7 @@ cd "您的新项目名称"
 
 #### 5. 一键生成源代码文档
 ```bash
+cd AI-Copyright-Application-Generator
 python3 scripts/generators/generate_all_sourcecode.py
 ```
 
@@ -334,6 +335,7 @@ python3 scripts/generators/generate_all_sourcecode.py
 
 ```bash
 # Python版本检查（推荐，功能完整）
+cd AI-Copyright-Application-Generator
 python3 scripts/validators/check_project.py              # 完整检查
 python3 scripts/validators/check_project.py --quick      # 快速检查
 
@@ -347,10 +349,11 @@ python3 scripts/validators/check_project.py --quick      # 快速检查
 
 ```bash
 # 运行所有自动化测试
+cd AI-Copyright-Application-Generator
 python3 scripts/validators/run_tests.py
 
 # 检查指定项目目录
-python3 scripts/validators/run_tests.py /path/to/project
+python3 /path/to/AI-Copyright-Application-Generator/scripts/validators/run_tests.py /path/to/project
 ```
 
 ### 检查项目包括
