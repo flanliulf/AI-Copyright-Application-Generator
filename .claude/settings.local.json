@@ -33,7 +33,8 @@
       "Bash(echo:*)",
       "Bash(for:*)",
       "Bash(do echo \"检查: $script\")",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

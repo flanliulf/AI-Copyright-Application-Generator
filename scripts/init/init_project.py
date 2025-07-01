@@ -12,7 +12,17 @@ import sys
 import json
 import shutil
 import argparse
+import locale
 from datetime import datetime
+
+# 设置系统编码
+if sys.platform.startswith('win'):
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer)
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer)
+
+# 确保终端编码为UTF-8
+os.environ['PYTHONIOENCODING'] = 'utf-8'
 from pathlib import Path
 
 class Colors:
@@ -41,21 +51,41 @@ def print_error(message):
 
 def get_user_input(prompt, default=""):
     """获取用户输入，支持默认值"""
-    if default:
-        user_input = input(f"{prompt} (默认: {default}): ").strip()
-        return user_input if user_input else default
-    else:
-        return input(f"{prompt}: ").strip()
+    try:
+        if default:
+            user_input = input(f"{prompt} (默认: {default}): ").strip()
+            return user_input if user_input else default
+        else:
+            return input(f"{prompt}: ").strip()
+    except UnicodeDecodeError:
+        print_error("输入编码错误，请确保终端支持UTF-8编码")
+        return default if default else ""
+    except KeyboardInterrupt:
+        print_error("用户中断操作")
+        sys.exit(1)
+    except Exception as e:
+        print_error(f"输入错误: {e}")
+        return default if default else ""
 
 def get_yes_no_input(prompt, default_no=True):
     """获取是/否输入"""
-    suffix = "(y/N)" if default_no else "(Y/n)"
-    response = input(f"{prompt} {suffix}: ").strip().lower()
-    
-    if default_no:
-        return response in ['y', 'yes', '是']
-    else:
-        return response not in ['n', 'no', '否']
+    try:
+        suffix = "(y/N)" if default_no else "(Y/n)"
+        response = input(f"{prompt} {suffix}: ").strip().lower()
+        
+        if default_no:
+            return response in ['y', 'yes', '是']
+        else:
+            return response not in ['n', 'no', '否']
+    except UnicodeDecodeError:
+        print_error("输入编码错误，请确保终端支持UTF-8编码")
+        return not default_no
+    except KeyboardInterrupt:
+        print_error("用户中断操作")
+        sys.exit(1)
+    except Exception as e:
+        print_error(f"输入错误: {e}")
+        return not default_no
 
 def get_generation_mode_config():
     """获取用户选择的生成模式配置"""
