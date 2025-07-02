@@ -176,7 +176,7 @@ class ProjectDoctor:
             "backend": "Java",
             "title": "软件系统",
             "short_title": "软件系统",
-            "system_profile": "requires_docs/需求文档.md",
+            "requirements_description": "requires_docs/需求文档.md",
             "dev_tech_stack": "specs_docs/tech_stack_specs/技术栈说明文档_默认.md",
             "ui_design_spec": "specs_docs/ui_design_specs/01-UI设计规范_默认_Corporate.md",
             "ui_design_style": "corporate",
@@ -348,12 +348,13 @@ class ProjectDoctor:
         
         expected_prompts = [
             "01-软著框架系统提示词.md",
-            "02-页面清单及设计系统提示词.md",
-            "03-网页代码生成系统提示词.md",
-            "04-数据库代码生成系统提示词.md",
-            "05-后端代码生成系统提示词.md",
-            "06-用户手册系统提示词.md",
-            "07-软件著作权登记信息表系统提示词.md"
+            "02-页面规划系统提示词.md",
+            "03-界面设计系统提示词.md",
+            "04-网页代码生成系统提示词.md",
+            "05-数据库代码生成系统提示词.md",
+            "06-后端代码生成系统提示词.md",
+            "07-用户手册系统提示词.md",
+            "08-软件著作权登记信息表系统提示词.md"
         ]
         
         missing_prompts = []

@@ -190,12 +190,13 @@ class ProjectChecker:
         
         prompts = [
             "system_prompts/01-软著框架系统提示词.md",
-            "system_prompts/02-页面清单及设计系统提示词.md",
-            "system_prompts/03-网页代码生成系统提示词.md",
-            "system_prompts/04-数据库代码生成系统提示词.md",
-            "system_prompts/05-后端代码生成系统提示词.md",
-            "system_prompts/06-用户手册系统提示词.md",
-            "system_prompts/07-软件著作权登记信息表系统提示词.md"
+            "system_prompts/02-页面规划系统提示词.md",
+            "system_prompts/03-界面设计系统提示词.md",
+            "system_prompts/04-网页代码生成系统提示词.md",
+            "system_prompts/05-数据库代码生成系统提示词.md",
+            "system_prompts/06-后端代码生成系统提示词.md",
+            "system_prompts/07-用户手册系统提示词.md",
+            "system_prompts/08-软件著作权登记信息表系统提示词.md"
         ]
         
         for prompt in prompts:
@@ -217,7 +218,7 @@ class ProjectChecker:
             # 检查必需字段
             required_fields = [
                 "front", "backend", "title", "short_title",
-                "system_profile", "dev_tech_stack", "ui_design_spec",
+                "requirements_description", "dev_tech_stack", "ui_design_spec",
                 "ui_design_style", "system_prompt_dir", "ui_design_spec_default"
             ]
             

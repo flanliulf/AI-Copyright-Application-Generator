@@ -4,7 +4,7 @@
   "backend": "1",
   "title": "1",
   "short_title": "1",
-  "system_profile": "requires_docs/需求文档.md",
+  "requirements_description": "requires_docs/需求文档.md",
   "dev_tech_stack": "requires_docs/技术栈说明文档.md",
   "ui_design_style": "corporate",
   "_comment_fixed": "=== 固定配置（不变） ===",
@@ -19,7 +19,8 @@
   "generation_mode": "fast",
   "_comment_generated": "=== 流程生成配置（自动生成） ===",
   "framework_design": "process_docs/框架设计文档.md",
-  "page_list": "process_docs/页面清单.md",
+  "page_list": "process_docs/页面规划.md",
+  "ui_design": "process_docs/界面设计方案.md",
   "database_schema": "output_sourcecode/db/database_schema.sql",
-  "deploy_requirements": "output_docs/软件著作权登记信息表.md"
+  "copyright_application": "output_docs/软件著作权登记信息表.md"
 }

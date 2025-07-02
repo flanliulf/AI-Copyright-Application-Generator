@@ -190,7 +190,7 @@ def create_config_file(title, short_title, ui_style, mode, front_tech, backend_t
         "backend": backend_tech,
         "title": title,
         "short_title": short_title,
-        "system_profile": "requires_docs/需求文档.md",
+        "requirements_description": "requires_docs/需求文档.md",
         "dev_tech_stack": "requires_docs/技术栈说明文档.md",
         "ui_design_style": ui_style,
         
@@ -210,7 +210,7 @@ def create_config_file(title, short_title, ui_style, mode, front_tech, backend_t
         "framework_design": "process_docs/框架设计文档.md",
         "page_list": "process_docs/页面清单.md",
         "database_schema": "output_sourcecode/db/database_schema.sql",
-        "deploy_requirements": "output_docs/软件著作权登记信息表.md"
+        "copyright_application": "output_docs/软件著作权登记信息表.md"
     }
     
     try:

@@ -20,13 +20,19 @@ This system represents a **paradigm shift** in software copyright application pr
 The system implements a **three-tier knowledge-driven architecture**:
 
 #### 1. Knowledge Layer (Expert Knowledge Systematization)
-- **AI Prompt Engineering Suite**: Seven specialized prompts encoding domain expertise
+- **AI Prompt Engineering Suite**: Eight specialized prompts encoding domain expertise
 - **UI Design Knowledge Base**: Twelve comprehensive design systems covering diverse aesthetic paradigms
 - **Technical Standards Repository**: Modular technology stack specifications and compliance frameworks
 - **Quality Assurance Protocols**: Embedded validation and verification mechanisms
 
 #### 2. Processing Layer (Intelligent Generation Engine)
-- **Progressive Construction Pipeline**: Six-stage workflow from conceptualization to delivery
+- **Progressive Construction Pipeline**: Optimized six-stage workflow from conceptualization to delivery (upgraded from previous 8-stage process)
+  - 阶段1：项目初始化和系统架构设计
+  - 阶段2：产品规划和界面设计
+  - 阶段3：前端开发实现
+  - 阶段4：后端系统开发
+  - 阶段5：软著申请文档生成
+  - 阶段6：材料整理和质量验收
 - **Multi-modal Content Generation**: Coordinated creation of documentation, code, and visual specifications
 - **Context-Aware Customization**: Dynamic adaptation based on project requirements and user preferences
 - **Quality Control Integration**: Real-time validation against copyright office standards
@@ -62,7 +68,7 @@ The system implements a **three-tier knowledge-driven architecture**:
 
 **1. Knowledge Engineering Excellence**
 - **Expert Knowledge Codification**: Systematic transformation of domain expertise into executable AI instructions
-- **Prompt Engineering Precision**: Each of the seven AI prompts represents hundreds of hours of domain expert knowledge distilled into precise, executable instructions
+- **Prompt Engineering Precision**: Each of the eight AI prompts represents hundreds of hours of domain expert knowledge distilled into precise, executable instructions
 - **Quality-by-Design**: Built-in quality controls and validation mechanisms rather than post-generation correction
 
 **2. Progressive Value Creation**
@@ -113,11 +119,23 @@ This repository implements a **comprehensive knowledge ecosystem** for professio
   - **Quality Standards**: Embedded compliance and validation criteria
 
 #### AI Intelligence Layer
-- **system_prompts/**: Seven specialized AI prompt engineering components
+- **system_prompts/**: Eight specialized AI prompt engineering components
+  - 01-软著框架系统提示词.md：系统架构设计和业务需求分析
+  - 02-页面规划系统提示词.md：功能页面规划和用户体验设计
+  - 03-界面设计系统提示词.md：UI设计系统和视觉规范制定
+  - 04-网页代码生成系统提示词.md：前端代码实现和交互开发
+  - 05-数据库代码生成系统提示词.md：数据模型设计和数据库实现
+  - 06-后端代码生成系统提示词.md：后端服务架构和API接口开发
+  - 07-用户手册系统提示词.md：专业用户文档和操作指南编写
+  - 08-软件著作权登记信息表系统提示词.md：官方申请材料和合规文档生成
   - Each prompt encodes specific domain expertise (architecture, design, implementation, documentation)
   - Progressive workflow integration ensuring consistent output quality
   - Built-in validation and quality control mechanisms
   - Adaptive complexity management based on project requirements
+  - **Enhanced Variable System**: All 18 system variables now include Chinese descriptions for improved user experience
+    - Core variables: {{title}}（系统完整名称）, {{short_title}}（系统简称）, {{front}}（前端开发语言）, {{backend}}（后端开发语言）
+    - Document flow: {{requirements_description}}（需求描述）, {{framework_design}}（框架设计文档）, {{page_list}}（页面规划）, {{ui_design}}（界面设计方案）
+    - Generation control: {{generation_mode}}（生成模式）, {{page_count_fast}}（快速模式页面数）, {{api_count_min}}（最小API数量）, etc.
 
 #### Generation & Output Systems
 - **output_docs/**: Professional copyright application material portfolio
@@ -262,6 +280,31 @@ When working with this repository, recognize that you are engaging with a **soph
 - **Knowledge Advancement**: Contributions enhance the systematic codification of domain expertise
 - **Capability Extension**: New features expand system utility while maintaining quality
 - **Ecosystem Growth**: Modifications contribute to the broader intellectual property protection ecosystem
+
+### Recent System Optimizations & Improvements
+
+The system has undergone significant optimizations to enhance user experience and operational efficiency:
+
+#### Workflow Streamlining (2025)
+- **Process Optimization**: Streamlined from 8-stage to 6-stage workflow for improved efficiency
+- **Stage Integration**: Combined redundant processes while maintaining comprehensive coverage
+- **User Experience**: Reduced complexity without compromising output quality
+
+#### Variable System Enhancement
+- **Chinese Localization**: All 18 system variables now include descriptive Chinese names
+- **User Clarity**: Enhanced readability and user understanding of system components
+- **Standardization**: Consistent variable naming conventions across all system prompts
+
+#### Configuration Improvements
+- **Variable Renaming**: Updated key variables for clarity:
+  - `system_profile` → `requirements_description`（需求描述）
+  - `deploy_requirements` → `copyright_application`（软件著作权登记信息表）
+- **Documentation Alignment**: All documentation updated to reflect new naming conventions
+
+#### System Prompt Accuracy
+- **Count Correction**: Updated documentation to reflect actual 8 system prompts (not 7)
+- **Functional Mapping**: Each prompt now clearly mapped to workflow stages
+- **Quality Enhancement**: Improved prompt descriptions and usage guidelines
 
 ---
 

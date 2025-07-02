@@ -289,7 +289,7 @@ def create_config_file(project_dir, config):
         "backend": config['backend_tech'],
         "title": config['system_title'],
         "short_title": config['system_short_title'],
-        "system_profile": "requires_docs/需求文档.md",
+        "requirements_description": "requires_docs/需求文档.md",
         "dev_tech_stack": config['tech_stack_path'],
         "ui_design_spec": ui_style_file_mapping[config['ui_design_style']],
         "ui_design_style": config['ui_design_style'],
@@ -308,7 +308,7 @@ def create_config_file(project_dir, config):
         "_usage_note_4": "4. 生成配置已设置为 " + config['generation_mode'] + " 模式，可调整：generation_mode（fast快速验证/full完整生产），page_count_fast/full（各模式页面数量），api_count_min/max（API数量范围）",
         "_usage_note_5": "5. 详细填写 requires_docs/需求文档.md 文件（必需）",
         "_usage_note_6": "6. 可选填写 requires_docs/技术栈说明文档.md 和 requires_docs/UI设计规范.md（如提供自定义UI规范，需手动修改ui_design_spec路径）",
-        "_usage_note_7": "7. 最后按照 工作流程.md 或 01-快速开始.md 执行六阶段生成流程",
+        "_usage_note_7": "7. 最后按照 工作流程.md 或 01-快速开始.md 执行八阶段生成流程",
         
         "_comment_fixed": "=== 固定配置（请勿修改） ===",
         "system_prompt_dir": "system_prompts",
@@ -318,7 +318,7 @@ def create_config_file(project_dir, config):
         "framework_design": f"process_docs/{config['system_title']}_框架设计文档.md",
         "page_list": "process_docs/页面清单.md",
         "database_schema": "output_sourcecode/db/database_schema.sql",
-        "deploy_requirements": f"output_docs/{config['system_title']}_软件著作权登记信息表.md"
+        "copyright_application": f"output_docs/{config['system_title']}_软件著作权登记信息表.md"
     }
     
     config_file = project_dir / "ai-copyright-config.json"
@@ -370,7 +370,7 @@ def create_readme(project_dir, config):
 
 1. **创建需求文档**: 在 `requires_docs/` 目录下创建您的需求文档
 2. **技术栈配置**: 如果需要自定义技术栈，请创建 `requires_docs/技术栈说明文档.md`
-3. **开始开发**: 按照 `workflow.md` 中的六阶段开发流程执行
+3. **开始开发**: 按照 `workflow.md` 中的八阶段开发流程执行
 
 ## 工作流程
 
@@ -676,12 +676,13 @@ def validate_project_integrity(project_dir, config):
     prompt_dir = project_dir / "system_prompts"
     expected_prompts = [
         "01-软著框架系统提示词.md",
-        "02-页面清单及设计系统提示词.md", 
-        "03-网页代码生成系统提示词.md",
-        "04-数据库代码生成系统提示词.md",
-        "05-后端代码生成系统提示词.md",
-        "06-用户手册系统提示词.md",
-        "07-软件著作权登记信息表系统提示词.md"
+        "02-页面规划系统提示词.md", 
+        "03-界面设计系统提示词.md",
+        "04-网页代码生成系统提示词.md",
+        "05-数据库代码生成系统提示词.md",
+        "06-后端代码生成系统提示词.md",
+        "07-用户手册系统提示词.md",
+        "08-软件著作权登记信息表系统提示词.md"
     ]
     
     for prompt_file in expected_prompts:

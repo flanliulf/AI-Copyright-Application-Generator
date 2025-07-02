@@ -166,12 +166,13 @@ check_system_prompts() {
     print_header "AI系统提示词完整性检查"
     
     check_file "system_prompts/01-软著框架系统提示词.md" true "框架设计提示词"
-    check_file "system_prompts/02-页面清单及设计系统提示词.md" true "页面设计提示词"
-    check_file "system_prompts/03-网页代码生成系统提示词.md" true "前端代码生成提示词"
-    check_file "system_prompts/04-数据库代码生成系统提示词.md" true "数据库生成提示词"
-    check_file "system_prompts/05-后端代码生成系统提示词.md" true "后端代码生成提示词"
-    check_file "system_prompts/06-用户手册系统提示词.md" true "用户手册生成提示词"
-    check_file "system_prompts/07-软件著作权登记信息表系统提示词.md" true "软著信息表生成提示词"
+    check_file "system_prompts/02-页面规划系统提示词.md" true "页面规划提示词"
+    check_file "system_prompts/03-界面设计系统提示词.md" true "界面设计提示词"
+    check_file "system_prompts/04-网页代码生成系统提示词.md" true "前端代码生成提示词"
+    check_file "system_prompts/05-数据库代码生成系统提示词.md" true "数据库生成提示词"
+    check_file "system_prompts/06-后端代码生成系统提示词.md" true "后端代码生成提示词"
+    check_file "system_prompts/07-用户手册系统提示词.md" true "用户手册生成提示词"
+    check_file "system_prompts/08-软件著作权登记信息表系统提示词.md" true "软著信息表生成提示词"
 }
 
 # 检查配置文件内容
